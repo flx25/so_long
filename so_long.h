@@ -6,23 +6,60 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/08 11:16:28 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/08 15:44:58 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 # include <stdlib.h>
-# include <mlx.h>
+# include "mlx/mlx.h"
 
-typedef struct s_program
+typedef struct s_vector
 {
-	void	*mlx_pointer;
-	void	*window;
+	int	x;
+	int	y;
+}				t_vector;
+
+typedef struct s_image
+{
+	void		*pointer;
+	t_vector	size;
+	char		*pixels;
+	int			bits_per_pixel;
+	int			line_size;
+	int			endian;
+}	t_image;
+
+typedef struct s_window {
+	void		*reference;
+	t_vector	size;
+}				t_window;
+
+typedef struct s_color {
+	int	r;
+	int	g;
+	int	b;
+	int	a;
+}	t_color;
+
+typedef struct s_program {
+	void		*mlx;
+	t_window	window;
+	t_image		sprite;
+	t_vector	sprite_position;
 }				t_program;
 
-# define WINDOW_WIDTH 600
-# define WINDOW_HEIGHT 300
+// t_window	ft_new_window(void *mlx, int widht, int height, char *name);
+// t_image		ft_new_sprite(void *mlx, char *path);
+
+// t_color		new_color(int r, int g, int b, int a);
+// void		turn_img_to_color(t_image *image, t_color color);
+
+// int			ft_input(int key, void *program);
+// int			ft_update (void *param);
+
+# define WINDOW_WIDTH 1200
+# define WINDOW_HEIGHT 600
 
 #endif
-
