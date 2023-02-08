@@ -6,11 +6,11 @@
 #    By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 09:42:12 by fvon-nag          #+#    #+#              #
-#    Updated: 2023/02/08 09:45:06 by fvon-nag         ###   ########.fr        #
+#    Updated: 2023/02/08 11:05:03 by fvon-nag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SOURCES =
+SOURCES = main.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -22,24 +22,21 @@ $(NAME) : all
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS) libft printf
-	$(CC) $(CFLAGS) -o $@ $< -Llibft -lft -Lft_printf -lftprintf
+$(NAME): $(OBJECTS) libft
+	$(CC) $(CFLAGS) -o $@ $< -Llibft -lft -lmlx -framework OpenGL -framework AppKit
+
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $?
 
 libft:
 	make -C libft
-printf:
-	make -C ft_printf
-
 clean:
 	rm -f $(OBJECTS)
 	make -C libft clean
-	make -C ft_printf clean
 
 fclean: clean
-	rm -f so_long libft/libft.a ft_printf/libftprintf.a
+	rm -f so_long libft/libft.a
 
 re: fclean all
 
