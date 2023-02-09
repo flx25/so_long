@@ -6,7 +6,7 @@
 #    By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 09:42:12 by fvon-nag          #+#    #+#              #
-#    Updated: 2023/02/08 11:18:45 by fvon-nag         ###   ########.fr        #
+#    Updated: 2023/02/09 11:22:33 by fvon-nag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,3 +38,8 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus libft clean fclean re
+
+noflags: $(OBJECTS) libft
+	$(CC) -o $@ $< -Llibft -lft -lmlx -framework OpenGL -framework AppKit
+
+

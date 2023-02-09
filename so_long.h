@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/08 15:44:58 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/09 11:17:32 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 # include <stdlib.h>
 # include "mlx/mlx.h"
 
+typedef struct s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data;
+
+typedef struct s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
+
+//other tut:
 typedef struct s_vector
 {
 	int	x;
@@ -59,7 +73,7 @@ typedef struct s_program {
 // int			ft_input(int key, void *program);
 // int			ft_update (void *param);
 
-# define WINDOW_WIDTH 1200
-# define WINDOW_HEIGHT 600
+//# define WINDOW_WIDTH 1200
+//# define WINDOW_HEIGHT 600
 
 #endif
