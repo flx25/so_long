@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/09 11:17:32 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/09 14:08:27 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SO_LONG_H
 # include <stdlib.h>
 # include "mlx/mlx.h"
+# include "libft/libft.h"
 
 typedef struct s_data {
 	void	*img;

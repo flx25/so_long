@@ -6,11 +6,12 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/09 11:21:43 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:35:32 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 
 // t_image	ft_new_sprite(void *mlx, char *path)
 // {
@@ -21,9 +22,16 @@
 // 	return (img);
 // }
 
-int	close(int keycode, t_vars *vars)
+int	key(int keycode, t_vars *vars)
 {
-	mlx_destroy_window(vars->mlx, vars->win);
+	if (keycode == 13)
+		ft_printf("UP (W)\n");
+	if (keycode == 1)
+		ft_printf("DOWN (S)\n");
+	if (keycode == 0)
+		ft_printf("LEFT (A)\n");
+	if (keycode == 2)
+		ft_printf("RIGHT (D)\n");
 	return (0);
 }
 
@@ -42,13 +50,16 @@ int	main(void)
 	void	*mlx_win;
 	t_vars	vars;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello world!");
+	mlx_key_hook(vars.win, key, &vars);
+	img.img = mlx_new_image(vars.mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
+	 		&img.endian);
 	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_hook(vars.win, 2, 1L << 0, close, &vars);
-	mlx_loop(mlx);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	mlx_loop(vars.mlx);
+	// mlx_key_hook(vars.win, key, &vars);
+	// mlx_loop(vars.mlx);
+	// mlx_loop(mlx);
 }
