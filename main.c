@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 16:53:37 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:59:31 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ void	drawit(char c, t_image *img, int x, int y, t_vars vars)
 	if (c == '1')
 		mlx_put_image_to_window(vars.mlx, vars.win, img[0].pointer,
 			x * 128, y * 128);
+	if (c == '0')
+		mlx_put_image_to_window(vars.mlx, vars.win, img[1].pointer,
+			x * 128, y * 128);
 
 
 }
@@ -130,8 +133,10 @@ t_image	*initimages(t_vars vars)
 {
 	t_image	*img;
 
-	img = ft_calloc(1 + 1, sizeof(t_image));
+	img = ft_calloc(2 + 1, sizeof(t_image));
 	img[0] = ft_new_sprite(vars.mlx, "Bricks_11-128x128.xpm");
+	img[1] = ft_new_sprite(vars.mlx, "Tile_14-128x128.xpm");
+
 
 	return (img);
 }
