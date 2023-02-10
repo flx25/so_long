@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 16:59:31 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:49:04 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 // CHECK FOR LEAKS
 // debugging flags on
 // may other flags off
+
+struct s_vector g_player;
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
@@ -26,10 +28,21 @@ t_image	ft_new_sprite(void *mlx, char *path)
 	return (img);
 }
 
-int	key(int keycode, t_vars *vars)
+void move(int x, int y, t_vars *vars, t_image *img)
+{
+	mlx_put_image_to_window(vars->mlx, vars->win, img[2].pointer,
+		g_player.x, g_player.y);
+	mlx_put_image_to_window(vars->mlx, vars->win, img[2].pointer,
+		g_player.x + x, g_player.y + y);
+
+	g_player.x += x;
+	g_player.y += y;
+
+}
+int	key(int keycode, t_vars *vars, t_image *img)
 {
 	if (keycode == 13)
-		ft_printf("UP (W)\n");
+		move(0, 128, vars, img);
 	if (keycode == 1)
 		ft_printf("DOWN (S)\n");
 	if (keycode == 0)
@@ -92,6 +105,13 @@ void	drawit(char c, t_image *img, int x, int y, t_vars vars)
 	if (c == '0')
 		mlx_put_image_to_window(vars.mlx, vars.win, img[1].pointer,
 			x * 128, y * 128);
+	if (c == 'E')
+	{
+		mlx_put_image_to_window(vars.mlx, vars.win, img[2].pointer,
+			x * 128, y * 128);
+		g_player.x = x * 128;
+		g_player.y = y * 128;
+	}
 
 
 }
@@ -133,9 +153,10 @@ t_image	*initimages(t_vars vars)
 {
 	t_image	*img;
 
-	img = ft_calloc(2 + 1, sizeof(t_image));
+	img = ft_calloc(3 + 1, sizeof(t_image));
 	img[0] = ft_new_sprite(vars.mlx, "Bricks_11-128x128.xpm");
 	img[1] = ft_new_sprite(vars.mlx, "Tile_14-128x128.xpm");
+	img[2] = ft_new_sprite(vars.mlx, "Ghost.xpm");
 
 
 	return (img);
