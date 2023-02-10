@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 16:38:09 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:53:37 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void mapdraw(char *map, t_image *img, t_vars vars)
 	int	x;
 	int	y;
 
-	x = 0;
+	x = 1;
 	i = 0;
 	y = 1;
 	while (map[i] != '\0')
