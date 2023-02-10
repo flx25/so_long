@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 15:15:08 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:53:32 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*readmap(char *map)
 	while (temp)
 	{
 		temp = get_next_line(fd);
+		if (temp == NULL)
+			break ;
 		out = ft_gnl_strjoin(out, temp);
 	}
 
@@ -66,10 +68,48 @@ char	*readmap(char *map)
 	return (out);
 }
 
-void	usemap(char *arg1)
+void	mapcheck(char *map)
 {
-	ft_printf("the map name is %s", arg1);
-	ft_printf("%s", readmap(arg1));
+
+}
+
+void	drawit(char c, t_data img, int x, int y)
+{
+	if(c == 1)
+
+}
+
+void mapdraw(char *map, t_data img)
+{
+	int	i;
+	int	x;
+	int	y;
+
+	x = 0;
+	i = 0;
+	y = 1;
+	while (map[i] != '\0')
+	{
+		if (map[i] == '\n')
+		{
+			x = 0;
+			y++;
+		}
+		else
+			drawit(map[i], img, x, y);
+		i++;
+		x++;
+	}
+}
+
+void	usemap(char *arg1, t_data img)
+{
+	char	*map;
+
+	ft_printf("%s \n", map = readmap(arg1));
+	mapcheck(map);
+	mapdraw(map, img);
+
 }
 
 int	main(int argc, char **argv)
@@ -79,14 +119,14 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
-	usemap(argv[1]);
+
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "so_long");
 	mlx_key_hook(vars.win, key, &vars);
+	usemap(argv[1], img);
 	img.img = mlx_new_image(vars.mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_hook(vars.win, 17, 0, ft_close, &vars);
 	mlx_loop(vars.mlx);
