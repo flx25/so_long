@@ -6,7 +6,7 @@
 #    By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 12:41:24 by fvon-nag          #+#    #+#              #
-#    Updated: 2023/02/08 09:56:20 by fvon-nag         ###   ########.fr        #
+#    Updated: 2023/02/10 14:58:18 by fvon-nag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ BSOURCES := ft_lstnew.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 BOBJECTS = $(BSOURCES:.c=.o)
-CFLAGS += -Wall -Wextra -Werror
+CFLAGS += -Wall -Wextra -Werror -g
 
 $(NAME) : ${OBJECTS}
 	ar rcs ${NAME} ${OBJECTS}
