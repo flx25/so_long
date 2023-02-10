@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 16:33:56 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:38:09 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // CHECK FOR LEAKS
 // debugging flags on
+// may other flags off
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
@@ -85,7 +86,7 @@ void	mapcheck(char *map)
 
 void	drawit(char c, t_image *img, int x, int y, t_vars vars)
 {
-	if (c == 1)
+	if (c == '1')
 		mlx_put_image_to_window(vars.mlx, vars.win, img[0].pointer,
 			x * 128, y * 128);
 
@@ -120,7 +121,7 @@ void	usemap(char *arg1, t_image *img, t_vars vars)
 	char	*map;
 
 	ft_printf("%s \n", map = readmap(arg1));
-	mapcheck(map);
+	//mapcheck(map);
 	mapdraw(map, img, vars);
 
 }
@@ -145,7 +146,7 @@ int	main(int argc, char **argv)
 
 	// maybe ** make all image pointers in the beginning
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 640, 480, "so_long");
+	vars.win = mlx_new_window(vars.mlx, 2400, 1200, "so_long");
 	img = initimages(vars);
 	mlx_key_hook(vars.win, key, &vars);
 	usemap(argv[1], img, vars);
