@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 15:53:32 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:33:56 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 
 // CHECK FOR LEAKS
 // debugging flags on
+
+t_image	ft_new_sprite(void *mlx, char *path)
+{
+	t_image	img;
+
+	img.pointer = mlx_xpm_file_to_image(mlx, path, &img.size.x, &img.size.y);
+	img.pixels = mlx_get_data_addr(img.pointer, &img.bits_per_pixel,
+			&img.line_size, &img.endian);
+	return (img);
+}
 
 int	key(int keycode, t_vars *vars)
 {
@@ -73,13 +83,16 @@ void	mapcheck(char *map)
 
 }
 
-void	drawit(char c, t_data img, int x, int y)
+void	drawit(char c, t_image *img, int x, int y, t_vars vars)
 {
-	if(c == 1)
+	if (c == 1)
+		mlx_put_image_to_window(vars.mlx, vars.win, img[0].pointer,
+			x * 128, y * 128);
+
 
 }
 
-void mapdraw(char *map, t_data img)
+void mapdraw(char *map, t_image *img, t_vars vars)
 {
 	int	i;
 	int	x;
@@ -96,38 +109,49 @@ void mapdraw(char *map, t_data img)
 			y++;
 		}
 		else
-			drawit(map[i], img, x, y);
+			drawit(map[i], img, x, y, vars);
 		i++;
 		x++;
 	}
 }
 
-void	usemap(char *arg1, t_data img)
+void	usemap(char *arg1, t_image *img, t_vars vars)
 {
 	char	*map;
 
 	ft_printf("%s \n", map = readmap(arg1));
 	mapcheck(map);
-	mapdraw(map, img);
+	mapdraw(map, img, vars);
 
+}
+
+t_image	*initimages(t_vars vars)
+{
+	t_image	*img;
+
+	img = ft_calloc(1 + 1, sizeof(t_image));
+	img[0] = ft_new_sprite(vars.mlx, "Bricks_11-128x128.xpm");
+
+	return (img);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	img;
+	t_image	*img;
 	t_vars	vars;
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
 
+	// maybe ** make all image pointers in the beginning
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "so_long");
+	img = initimages(vars);
 	mlx_key_hook(vars.win, key, &vars);
-	usemap(argv[1], img);
-	img.img = mlx_new_image(vars.mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	usemap(argv[1], img, vars);
+
+	//mlx_put_image_to_window(vars.mlx, vars.win, img[0].pointer, 0, 0);
+	//mlx_put_image_to_window(vars.mlx, vars.win, img[0].pointer, 200, 200);
 	mlx_hook(vars.win, 17, 0, ft_close, &vars);
 	mlx_loop(vars.mlx);
 }

@@ -6,7 +6,7 @@
 #    By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 09:42:12 by fvon-nag          #+#    #+#              #
-#    Updated: 2023/02/10 14:58:28 by fvon-nag         ###   ########.fr        #
+#    Updated: 2023/02/10 16:15:28 by fvon-nag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -g
 
 all: $(NAME)
 
