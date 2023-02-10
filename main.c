@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 14:59:24 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:15:08 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ char	*readmap(char *map)
 	char	*out;
 
 	temp = ft_calloc(1, sizeof(char));
+	out = ft_calloc(1, sizeof(char));
 	fd = open(map, O_RDONLY);
 	while (temp)
 	{
 		temp = get_next_line(fd);
 		out = ft_gnl_strjoin(out, temp);
 	}
+
 	free(temp);
 	return (out);
 }
@@ -67,7 +69,7 @@ char	*readmap(char *map)
 void	usemap(char *arg1)
 {
 	ft_printf("the map name is %s", arg1);
-	readmap(arg1);
+	ft_printf("%s", readmap(arg1));
 }
 
 int	main(int argc, char **argv)
