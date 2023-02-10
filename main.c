@@ -6,13 +6,13 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/09 15:35:32 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/10 11:50:36 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
+// WATCH OUT COMPILER FLAGS OFF
 // t_image	ft_new_sprite(void *mlx, char *path)
 // {
 // 	t_image	img;
@@ -32,9 +32,13 @@ int	key(int keycode, t_vars *vars)
 		ft_printf("LEFT (A)\n");
 	if (keycode == 2)
 		ft_printf("RIGHT (D)\n");
+	if (keycode == 53)
+		mlx_destroy_window(vars->mlx, vars->win);
+
+	// maybe need more to close
+
 	return (0);
 }
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -46,8 +50,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	main(void)
 {
 	t_data	img;
-	void	*mlx;
-	void	*mlx_win;
 	t_vars	vars;
 
 	vars.mlx = mlx_init();
@@ -58,6 +60,7 @@ int	main(void)
 	 		&img.endian);
 	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	mlx_hook(vars.win, 17, 0, close, &vars);
 	mlx_loop(vars.mlx);
 	// mlx_key_hook(vars.win, key, &vars);
 	// mlx_loop(vars.mlx);
