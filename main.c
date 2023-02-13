@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 15:23:40 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:34:44 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,25 +95,25 @@ void	mapcheck(char *map)
 
 }
 
-// void	drawit(char c, int x, int y, t_mega **mega)
-// {
-// 	if (c == '1')
-// 		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[0].img.pointer,
-// 			x * 128, y * 128);
-// 	if (c == '0')
-// 		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[1].pointer,
-// 			x * 128, y * 128);
-// 	if (c == 'E')
-// 	{
-// 		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[2].pointer,
-// 			x * 128, y * 128);
-// 		//add positions to mega struct
-// 	}
+void	drawit(char c, int x, int y, t_mega *mega)
+{
+	if (c == '1')
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[0].s_image.reference, x * 128, y * 128);
+	if (c == '0')
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, x * 128, y * 128);
+	if (c == 'E')
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[2].s_image.reference, x * 128, y * 128);
+		//add positions to mega struct
+	}
 
 
-// }
+}
 
-void mapdraw(char *map, t_mega **mega)
+void mapdraw(char *map, t_mega *mega)
 {
 	int	i;
 	int	x;
@@ -129,20 +129,20 @@ void mapdraw(char *map, t_mega **mega)
 			x = 0;
 			y++;
 		}
-		// else
-		// 	drawit(map[i], x, y, mega);
+		else
+			drawit(map[i], x, y, mega);
 		i++;
 		x++;
 	}
 }
 
-void	usemap(char *arg1, t_mega **mega)
+void	usemap(char *arg1, t_mega *mega)
 {
 	char	*map;
 
 	ft_printf("%s \n", map = readmap(arg1));
 	//mapcheck(map);
-	// mapdraw(map, mega);
+	mapdraw(map, mega);
 
 }
 
@@ -210,7 +210,7 @@ int	main(int argc, char **argv)
 			1200, "so_long");
 	initimages(mega[0]);
 	// mlx_key_hook(mega[0].win, key, &mega);
-	usemap(argv[1], &mega);
+	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, &mega);
 	mlx_loop(mega[0].s_vars.mlx);
 }
