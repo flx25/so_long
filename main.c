@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 11:38:06 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:45:04 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 // debugging flags on
 // may other flags off
 
-void	ft_new_sprite(t_mega *mega, char *path)
+t_image	ft_new_sprite(void *mlx, char *path)
 {
-	mega->pointer = mlx_xpm_file_to_image(mega->mlx, path, &mega->size.x,
-			&mega->size.y);
-	mega->pixels = mlx_get_data_addr(mega->pointer, &mega->bits_per_pixel,
-			&mega->line_size, &mega->endian);
+	t_image	img;
+
+	img.reference = mlx_xpm_file_to_image(mlx, path, &img.size.x, &img.size.y);
+	img.pixels = mlx_get_data_addr(img.reference, &img.bits_per_pixel,
+			&img.line_size, &img.endian);
+	return (img);
 }
 
 // void move(int x, int y, t_vars *vars, t_image *img)
@@ -93,23 +95,23 @@ void	mapcheck(char *map)
 
 }
 
-void	drawit(char c, int x, int y, t_mega *mega)
-{
-	if (c == '1')
-		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[0].pointer,
-			x * 128, y * 128);
-	if (c == '0')
-		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[1].pointer,
-			x * 128, y * 128);
-	if (c == 'E')
-	{
-		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[2].pointer,
-			x * 128, y * 128);
-		//add positions to mega struct
-	}
+// void	drawit(char c, int x, int y, t_mega **mega)
+// {
+// 	if (c == '1')
+// 		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[0].img.pointer,
+// 			x * 128, y * 128);
+// 	if (c == '0')
+// 		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[1].pointer,
+// 			x * 128, y * 128);
+// 	if (c == 'E')
+// 	{
+// 		mlx_put_image_to_window(mega[0].mlx, mega[0].win, mega[2].pointer,
+// 			x * 128, y * 128);
+// 		//add positions to mega struct
+// 	}
 
 
-}
+// }
 
 void mapdraw(char *map, t_mega **mega)
 {
@@ -127,8 +129,8 @@ void mapdraw(char *map, t_mega **mega)
 			x = 0;
 			y++;
 		}
-		else
-			drawit(map[i], x, y, mega);
+		// else
+		// 	drawit(map[i], x, y, mega);
 		i++;
 		x++;
 	}
@@ -140,15 +142,15 @@ void	usemap(char *arg1, t_mega **mega)
 
 	ft_printf("%s \n", map = readmap(arg1));
 	//mapcheck(map);
-	mapdraw(map, mega);
+	// mapdraw(map, mega);
 
 }
 
 void	*initimages(t_mega **mega)
 {
-	ft_new_sprite(mega[0], "Bricks_11-128x128.xpm");
-	ft_new_sprite(mega[1], "Tile_14-128x128.xpm");
-	ft_new_sprite(mega[2], "Ghost.xpm");
+	mega[0]->s_image = ft_new_sprite(mega[0]->s_vars.mlx, "Bricks_11-128x128.xpm");
+	mega[1]->s_image = ft_new_sprite(mega[1]->s_vars.mlx, "Tile_14-128x128.xpm");
+	mega[2]->s_image = ft_new_sprite(mega[2]->s_vars.mlx, "Ghost.xpm");
 
 
 }
@@ -199,11 +201,12 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
 	mega = initmap(argv[1], mega);
-	mega[0]->mlx = mlx_init();
-	mega[0]->win = mlx_new_window(mega[0]->mlx, 2400, 1200, "so_long");
+	mega[0]->s_vars.mlx = mlx_init();
+	mega[0]->s_vars.win = mlx_new_window(mega[0]->s_vars.mlx, 2400,
+			1200, "so_long");
 	initimages(mega);
 	// mlx_key_hook(mega[0].win, key, &mega);
 	usemap(argv[1], mega);
-	mlx_hook(mega[0]->win, 17, 0, ft_close, &mega);
-	mlx_loop(mega[0]->mlx);
+	mlx_hook(mega[0]->s_vars.win, 17, 0, ft_close, &mega);
+	mlx_loop(mega[0]->s_vars.mlx);
 }
