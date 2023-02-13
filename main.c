@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 11:25:13 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/13 11:38:06 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,25 +169,27 @@ int ft_strlen_nnl(char *str)
 	return (count);
 }
 
-void	initmap(char *argv1, t_mega **mega)
+t_mega **initmap(char *argv1, t_mega **mega)
 {
 	char	*map;
 	int		msize;
 	int		i;
+	t_mega	**out;
 
 	map = readmap(argv1);
 	msize = ft_strlen_nnl(map);
 	i = 0;
 
-	mega = (t_mega **) ft_calloc(msize + 1, sizeof(t_mega *));
+	out = (t_mega **) ft_calloc(msize + 1, sizeof(t_mega *));
 
 	while (i <= msize)
 	{
-		mega[i] = (t_mega *) ft_calloc(1, sizeof(t_mega));
+		out[i] = (t_mega *) ft_calloc(1, sizeof(t_mega));
 		i++;
 	}
-	mega[0]->structlen = msize;
+	out[0]->structlen = msize;
 	free(map);
+	return (out);
 }
 
 int	main(int argc, char **argv)
@@ -196,7 +198,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
-	initmap(argv[1], mega);
+	mega = initmap(argv[1], mega);
 	mega[0]->mlx = mlx_init();
 	mega[0]->win = mlx_new_window(mega[0]->mlx, 2400, 1200, "so_long");
 	initimages(mega);
