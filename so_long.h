@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/10 14:51:36 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/13 09:56:50 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,47 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 
-typedef struct s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+// typedef struct s_data {
+// 	void	*img;
+// 	char	*addr;
+// 	int		bits_per_pixel;
+// 	int		line_length;
+// 	int		endian;
+// }				t_data;
 
-typedef struct s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
-
-//other tut:
 typedef struct s_vector
 {
 	int	x;
 	int	y;
 }				t_vector;
+
+typedef struct s_mega {
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			endian;
+	void		*pointer;
+	char		*pixels;
+	int			bits_per_pixel;
+	int			line_size;
+	t_vector	size;
+	int			x;
+	int			y;
+	int			px;
+	int			py;
+	char		type;
+	int			colcoins;
+	int			needcoins;
+	int			structlen;
+}				t_mega;
+
+typedef struct s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
+//other tut:
+
 
 typedef struct s_image
 {
