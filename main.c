@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 15:34:44 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:51:18 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,17 +146,20 @@ void	usemap(char *arg1, t_mega *mega)
 
 }
 
-void	*initimages(t_mega mega)
+void initimages(t_mega **mega)
 {
-	t_image	*img;
+	//t_image	*img;
 
-	img = ft_calloc(3 + 1, sizeof(t_image));
+	//img = ft_calloc(3 + 1, sizeof(t_image));
 
-	img[0] = ft_new_sprite(mega.s_vars.mlx, "Bricks_11-128x128.xpm");
-	img[1] = ft_new_sprite(mega.s_vars.mlx, "Tile_14-128x128.xpm");
-	img[2] = ft_new_sprite(mega.s_vars.mlx, "Ghost.xpm");
+	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Bricks_11-128x128.xpm");
+	(*mega)[1].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Tile_14-128x128.xpm");
+	(*mega)[2].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Ghost.xpm");
 
-	return (img);
+	//return (img);
 }
 
 int ft_strlen_nnl(char *str)
@@ -208,7 +211,7 @@ int	main(int argc, char **argv)
 	mega[0].s_vars.mlx = mlx_init();
 	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2400,
 			1200, "so_long");
-	initimages(mega[0]);
+	initimages(&mega);
 	// mlx_key_hook(mega[0].win, key, &mega);
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, &mega);
