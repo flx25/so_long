@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 14:45:04 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:23:40 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,17 @@ void	usemap(char *arg1, t_mega **mega)
 
 }
 
-void	*initimages(t_mega **mega)
+void	*initimages(t_mega mega)
 {
-	mega[0]->s_image = ft_new_sprite(mega[0]->s_vars.mlx, "Bricks_11-128x128.xpm");
-	mega[1]->s_image = ft_new_sprite(mega[1]->s_vars.mlx, "Tile_14-128x128.xpm");
-	mega[2]->s_image = ft_new_sprite(mega[2]->s_vars.mlx, "Ghost.xpm");
+	t_image	*img;
 
+	img = ft_calloc(3 + 1, sizeof(t_image));
 
+	img[0] = ft_new_sprite(mega.s_vars.mlx, "Bricks_11-128x128.xpm");
+	img[1] = ft_new_sprite(mega.s_vars.mlx, "Tile_14-128x128.xpm");
+	img[2] = ft_new_sprite(mega.s_vars.mlx, "Ghost.xpm");
+
+	return (img);
 }
 
 int ft_strlen_nnl(char *str)
@@ -171,42 +175,42 @@ int ft_strlen_nnl(char *str)
 	return (count);
 }
 
-t_mega **initmap(char *argv1, t_mega **mega)
+t_mega	*initmap(char *argv1, t_mega **mega)
 {
 	char	*map;
 	int		msize;
 	int		i;
-	t_mega	**out;
+	t_mega	*out;
 
 	map = readmap(argv1);
 	msize = ft_strlen_nnl(map);
 	i = 0;
 
-	out = (t_mega **) ft_calloc(msize + 1, sizeof(t_mega *));
+	out = (t_mega *) ft_calloc(msize + 1, sizeof(t_mega));
 
-	while (i <= msize)
-	{
-		out[i] = (t_mega *) ft_calloc(1, sizeof(t_mega));
-		i++;
-	}
-	out[0]->structlen = msize;
+	// while (i <= msize)
+	// {
+	// 	out[i] = (t_mega *) ft_calloc(1, sizeof(t_mega));
+	// 	i++;
+	// }
+	out[0].structlen = msize;
 	free(map);
 	return (out);
 }
 
 int	main(int argc, char **argv)
 {
-	t_mega	**mega;
+	t_mega	*mega;
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
-	mega = initmap(argv[1], mega);
-	mega[0]->s_vars.mlx = mlx_init();
-	mega[0]->s_vars.win = mlx_new_window(mega[0]->s_vars.mlx, 2400,
+	mega = initmap(argv[1], &mega);
+	mega[0].s_vars.mlx = mlx_init();
+	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2400,
 			1200, "so_long");
-	initimages(mega);
+	initimages(mega[0]);
 	// mlx_key_hook(mega[0].win, key, &mega);
-	usemap(argv[1], mega);
-	mlx_hook(mega[0]->s_vars.win, 17, 0, ft_close, &mega);
-	mlx_loop(mega[0]->s_vars.mlx);
+	usemap(argv[1], &mega);
+	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, &mega);
+	mlx_loop(mega[0].s_vars.mlx);
 }
