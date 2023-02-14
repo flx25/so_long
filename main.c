@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 11:51:03 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:53:22 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	drawit(char c, int x, int y, t_mega *mega)
 			mega[4].s_image.reference, x * 128, y * 128);
 		mega[0].needcoins += 1;
 		mega[i].x = x * 128;
-		mega[i].y = x * 128;
+		mega[i].y = y * 128;
 		mega[i].type = 'C';
 		i++;
 	}
@@ -157,7 +157,7 @@ void	drawit(char c, int x, int y, t_mega *mega)
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[5].s_image.reference, x * 128, y * 128);
 		mega[i].x = x * 128;
-		mega[i].y = x * 128;
+		mega[i].y = y * 128;
 		mega[i].type = 'E';
 		i++;
 	}
