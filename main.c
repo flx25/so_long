@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 13:14:38 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 13:38:40 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void move(int x, int y, t_mega *mega)
 		mega[0].py = mega[0].py + y;
 		mega[0].stepsdone += 1;
 		//some kind of winning function
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[6].s_image.reference, mega[0].px, mega[0].py);
 	}
 	ft_printf("steps done: %i\n", mega[0].stepsdone);
 }
@@ -241,6 +243,8 @@ void initimages(t_mega **mega)
 			"collect.xpm");
 	(*mega)[5].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"ladder.xpm");
+	(*mega)[6].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"winning.xpm");
 }
 
 int ft_strlen_nnl(char *str)
