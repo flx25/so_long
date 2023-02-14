@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 15:51:18 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 09:53:31 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,33 @@ t_image	ft_new_sprite(void *mlx, char *path)
 	return (img);
 }
 
-// void move(int x, int y, t_vars *vars, t_image *img)
-// {
-// 	mlx_put_image_to_window(vars->mlx, vars->win, img[2].pointer,
-// 		g_player.x, g_player.y);
-// 	mlx_put_image_to_window(vars->mlx, vars->win, img[2].pointer,
-// 		g_player.x + x, g_player.y + y);
-
-// 	g_player.x += x;
-// 	g_player.y += y;
-
-// }
-// int	key(int keycode, t_vars *vars, t_image *img)
-// {
-// 	if (keycode == 13)
-// 		move(0, 128, vars, img);
-// 	if (keycode == 1)
-// 		ft_printf("DOWN (S)\n");
-// 	if (keycode == 0)
-// 		ft_printf("LEFT (A)\n");
-// 	if (keycode == 2)
-// 		ft_printf("RIGHT (D)\n");
-// 	if (keycode == 53)
-// 	{
-// 		mlx_destroy_window(vars->mlx, vars->win);
-// 		exit(0);
-// 	}
-// 	// maybe need more to close
-// 	return (0);
-// }
+void move(int x, int y, t_mega *mega)
+{
+	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[0].s_image.reference,
+		mega[0].px, mega[0].py);
+	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[2].s_image.reference,
+		mega[0].px + x, mega[0].py + y); //playerposition + x & y
+		mega[0].px = mega[0].px + x;
+		mega[0].py = mega[0].py + y;
+}
+int	key(int keycode, t_mega *mega)
+{
+	if (keycode == 13)
+		move(0, -128, mega);
+	if (keycode == 1)
+		move(0, 128, mega);
+	if (keycode == 0)
+		move(-128, 0, mega);
+	if (keycode == 2)
+		move(128, 0, mega);
+	if (keycode == 53)
+	{
+		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+		exit(0);
+	}
+	// maybe need more to close
+	return (0);
+}
 
 int	ft_close(void)
 {
@@ -106,9 +104,13 @@ void	drawit(char c, int x, int y, t_mega *mega)
 	if (c == 'E')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, x * 128, y * 128);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[2].s_image.reference, x * 128, y * 128);
+		mega[0].px = x * 128;
+		mega[0].py = y * 128;
 		//add positions to mega struct
-	}
+	} //add else for the others maybe
 
 
 }
@@ -148,18 +150,12 @@ void	usemap(char *arg1, t_mega *mega)
 
 void initimages(t_mega **mega)
 {
-	//t_image	*img;
-
-	//img = ft_calloc(3 + 1, sizeof(t_image));
-
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"Bricks_11-128x128.xpm");
 	(*mega)[1].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"Tile_14-128x128.xpm");
 	(*mega)[2].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"Ghost.xpm");
-
-	//return (img);
 }
 
 int ft_strlen_nnl(char *str)
@@ -212,8 +208,8 @@ int	main(int argc, char **argv)
 	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2400,
 			1200, "so_long");
 	initimages(&mega);
-	// mlx_key_hook(mega[0].win, key, &mega);
+	mlx_key_hook(mega[0].s_vars.win, key, mega);
 	usemap(argv[1], mega);
-	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, &mega);
+	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
 	mlx_loop(mega[0].s_vars.mlx);
 }
