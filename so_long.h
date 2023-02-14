@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/13 16:31:58 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 10:15:19 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_mega {
 	int			px;
 	int			py;
 	char		type;
+	int			collected;
 	int			colcoins;
 	int			needcoins;
 	int			structlen;

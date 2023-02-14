@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 10:12:35 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 10:44:28 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,34 @@ t_image	ft_new_sprite(void *mlx, char *path)
 	return (img);
 }
 
+int	tilecheck(int x, int y, t_mega *mega)
+{
+	int	i;
+
+	i = 0;
+	while (i <= mega[0].structlen)
+	{
+		if (mega[i].x == x && mega[i].y == y)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 void move(int x, int y, t_mega *mega)
 {
-	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[3].s_image.reference,
-		mega[0].px, mega[0].py);
-	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[1].s_image.reference,
-		mega[0].px, mega[0].py);
-	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[2].s_image.reference,
-		mega[0].px + x, mega[0].py + y); //playerposition + x & y
+	if (tilecheck(mega[0].px + x,mega[0].py + y, mega) == -1)
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[3].s_image.reference, mega[0].px, mega[0].py);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, mega[0].px, mega[0].py);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+		mega[2].s_image.reference, mega[0].px + x, mega[0].py + y); //playerposition + x & y
 		mega[0].px = mega[0].px + x;
 		mega[0].py = mega[0].py + y;
+		mega[0].stepsdone += 1;
+	}
+	ft_printf("steps done: %i\n", mega[0].stepsdone);
 }
 int	key(int keycode, t_mega *mega)
 {
@@ -90,16 +108,24 @@ char	*readmap(char *map)
 	return (out);
 }
 
-void	mapcheck(char *map)
-{
+// void	mapcheck(char *map)
+// {
 
-}
+// }
 
 void	drawit(char c, int x, int y, t_mega *mega)
 {
+	static int	i;
+
 	if (c == '1')
-		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+		{
+			mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[0].s_image.reference, x * 128, y * 128);
+			mega[i].x = x * 128;
+			mega[i].y = y * 128;
+			mega[i].type = '1';
+			i++;
+		}
 	if (c == '0')
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[1].s_image.reference, x * 128, y * 128);
@@ -171,14 +197,14 @@ int ft_strlen_nnl(char *str)
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] != '\n')
+		if (str[i] != '\n' || str[i] != '0')
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-t_mega	*initmap(char *argv1, t_mega **mega)
+t_mega	*initmap(char *argv1)
 {
 	char	*map;
 	int		msize;
@@ -207,7 +233,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
-	mega = initmap(argv[1], &mega);
+	mega = initmap(argv[1]);
 	mega[0].s_vars.mlx = mlx_init();
 	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2400,
 			1200, "so_long");
