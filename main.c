@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 09:53:31 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 10:12:35 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ t_image	ft_new_sprite(void *mlx, char *path)
 
 void move(int x, int y, t_mega *mega)
 {
-	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[0].s_image.reference,
+	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[3].s_image.reference,
+		mega[0].px, mega[0].py);
+	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[1].s_image.reference,
 		mega[0].px, mega[0].py);
 	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win, mega[2].s_image.reference,
 		mega[0].px + x, mega[0].py + y); //playerposition + x & y
@@ -151,11 +153,13 @@ void	usemap(char *arg1, t_mega *mega)
 void initimages(t_mega **mega)
 {
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Bricks_11-128x128.xpm");
+			"Bricks_14-128x128.xpm");
 	(*mega)[1].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"Tile_14-128x128.xpm");
 	(*mega)[2].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"Ghost.xpm");
+	(*mega)[3].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"black.xpm");
 }
 
 int ft_strlen_nnl(char *str)
