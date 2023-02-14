@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 10:44:28 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 11:13:39 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	tilecheck(int x, int y, t_mega *mega)
 }
 void move(int x, int y, t_mega *mega)
 {
-	if (tilecheck(mega[0].px + x,mega[0].py + y, mega) == -1)
+	if (tilecheck(mega[0].px + x, mega[0].py + y, mega) == -1)
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[3].s_image.reference, mega[0].px, mega[0].py);
@@ -118,18 +118,18 @@ void	drawit(char c, int x, int y, t_mega *mega)
 	static int	i;
 
 	if (c == '1')
-		{
-			mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[0].s_image.reference, x * 128, y * 128);
-			mega[i].x = x * 128;
-			mega[i].y = y * 128;
-			mega[i].type = '1';
-			i++;
-		}
+		mega[i].x = x * 128;
+		mega[i].y = y * 128;
+		mega[i].type = '1';
+		i++;
+	}
 	if (c == '0')
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[1].s_image.reference, x * 128, y * 128);
-	if (c == 'E')
+	if (c == 'P')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[1].s_image.reference, x * 128, y * 128);
@@ -137,8 +137,30 @@ void	drawit(char c, int x, int y, t_mega *mega)
 			mega[2].s_image.reference, x * 128, y * 128);
 		mega[0].px = x * 128;
 		mega[0].py = y * 128;
-		//add positions to mega struct
-	} //add else for the others maybe
+	}
+	if (c == 'C')
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, x * 128, y * 128);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[4].s_image.reference, x * 128, y * 128);
+		mega[0].needcoins += 1;
+		mega[i].x = x * 128;
+		mega[i].y = x * 128;
+		mega[i].type = 'C';
+		i++;
+	}
+	if (c == 'E')
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, x * 128, y * 128);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[5].s_image.reference, x * 128, y * 128);
+		mega[i].x = x * 128;
+		mega[i].y = x * 128;
+		mega[i].type = 'E';
+		i++;
+	}
 
 
 }
@@ -186,6 +208,10 @@ void initimages(t_mega **mega)
 			"Ghost.xpm");
 	(*mega)[3].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"black.xpm");
+	(*mega)[4].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"collect.xpm");
+	(*mega)[5].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"ladder.xpm");
 }
 
 int ft_strlen_nnl(char *str)
