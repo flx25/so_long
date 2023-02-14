@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 12:53:22 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 13:14:38 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // CHECK FOR LEAKS
 // debugging flags on
 // may other flags off
+// need to find some way to work with big maps
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
@@ -41,17 +42,44 @@ int	tilecheck(int x, int y, t_mega *mega)
 }
 void move(int x, int y, t_mega *mega)
 {
-	if (tilecheck(mega[0].px + x, mega[0].py + y, mega) == -1)
+	int	tcret;
+
+	tcret = tilecheck(mega[0].px + x, mega[0].py + y, mega);
+	if (tcret == -1)
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[3].s_image.reference, mega[0].px, mega[0].py);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[1].s_image.reference, mega[0].px, mega[0].py);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-		mega[2].s_image.reference, mega[0].px + x, mega[0].py + y); //playerposition + x & y
+		mega[2].s_image.reference, mega[0].px + x, mega[0].py + y);
 		mega[0].px = mega[0].px + x;
 		mega[0].py = mega[0].py + y;
 		mega[0].stepsdone += 1;
+	}
+	else if (mega[tcret].type == 'C' )
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[3].s_image.reference, mega[0].px, mega[0].py);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, mega[0].px, mega[0].py);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+		mega[2].s_image.reference, mega[0].px + x, mega[0].py + y);
+		mega[0].px = mega[0].px + x;
+		mega[0].py = mega[0].py + y;
+		mega[0].stepsdone += 1;
+		mega[0].colcoins += 1;
+	}
+	else if (mega[tcret].type == 'E' && mega[0].colcoins == mega[0].needcoins)
+	{
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[3].s_image.reference, mega[0].px, mega[0].py);
+		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
+			mega[1].s_image.reference, mega[0].px, mega[0].py);
+		mega[0].px = mega[0].px + x;
+		mega[0].py = mega[0].py + y;
+		mega[0].stepsdone += 1;
+		//some kind of winning function
 	}
 	ft_printf("steps done: %i\n", mega[0].stepsdone);
 }
@@ -69,8 +97,9 @@ int	key(int keycode, t_mega *mega)
 	{
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
 		exit(0);
+			// maybe need more to close
 	}
-	// maybe need more to close
+
 	return (0);
 }
 
@@ -261,8 +290,8 @@ int	main(int argc, char **argv)
 		return (ft_printf("Please give a map as an argument!\n"));
 	mega = initmap(argv[1]);
 	mega[0].s_vars.mlx = mlx_init();
-	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2400,
-			1200, "so_long");
+	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 5400,
+			3200, "so_long");
 	initimages(&mega);
 	mlx_key_hook(mega[0].s_vars.win, key, mega);
 	usemap(argv[1], mega);
