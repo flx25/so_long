@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 13:38:40 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:31:02 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ void move(int x, int y, t_mega *mega)
 		mega[0].px = mega[0].px + x;
 		mega[0].py = mega[0].py + y;
 		mega[0].stepsdone += 1;
-		mega[0].colcoins += 1;
+		if (mega[tcret].collected == 0)
+		{
+			mega[0].colcoins += 1;
+			mega[tcret].collected = 1;
+		}
 	}
 	else if (mega[tcret].type == 'E' && mega[0].colcoins == mega[0].needcoins)
 	{
