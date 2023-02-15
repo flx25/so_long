@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 10:20:34 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:26:22 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,4 @@ typedef struct s_mega {
 	int			stepsdone;
 }				t_mega;
 
-//other tut:
-
-
-
-typedef struct s_color {
-	int	r;
-	int	g;
-	int	b;
-	int	a;
-}	t_color;
-
-// t_window	ft_new_window(void *mlx, int widht, int height, char *name);
-// t_image		ft_new_sprite(void *mlx, char *path);
-
-// t_color		new_color(int r, int g, int b, int a);
-// void		turn_img_to_color(t_image *image, t_color color);
-
-// int			ft_input(int key, void *program);
-// int			ft_update (void *param);
-
-//# define WINDOW_WIDTH 1200
-//# define WINDOW_HEIGHT 600
 #endif
