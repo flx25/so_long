@@ -6,7 +6,7 @@
 #    By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 12:41:24 by fvon-nag          #+#    #+#              #
-#    Updated: 2023/02/10 14:58:18 by fvon-nag         ###   ########.fr        #
+#    Updated: 2023/02/15 09:31:27 by fvon-nag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,16 @@ SOURCES := ft_strlen.c\
 		printhex.c\
 		get_next_line_bonus.c\
 		get_next_line_utils_bonus.c\
+		ft_lstnew.c\
+		ft_lstadd_front.c\
+		ft_lstsize.c\
+		ft_lstlast.c\
+		ft_lstadd_back.c\
+		ft_lstdelone.c\
+		ft_lstclear.c\
+		ft_lstiter.c\
+		ft_lstmap.c
+
 
 
 BSOURCES := ft_lstnew.c\
