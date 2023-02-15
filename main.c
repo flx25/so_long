@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 10:50:34 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:55:30 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void move(int x, int y, t_mega *mega)
 int	key(int keycode, t_mega *mega)
 {
 	if (keycode == 13)
-		move(0, -IMS, mega);
+		move(0, -mega[0].is, mega);
 	if (keycode == 1)
-		move(0, IMS, mega);
+		move(0, mega[0].is, mega);
 	if (keycode == 0)
-		move(-IMS, 0, mega);
+		move(-mega[0].is, 0, mega);
 	if (keycode == 2)
-		move(IMS, 0, mega);
+		move(mega[0].is, 0, mega);
 	if (keycode == 53)
 	{
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
@@ -156,44 +156,44 @@ void	drawit(char c, int x, int y, t_mega *mega)
 	if (c == '1')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[0].s_image.reference, x * IMS, y * IMS);
-		mega[i].x = x * IMS;
-		mega[i].y = y * IMS;
+			mega[0].s_image.reference, x * mega[0].is, y * mega[0].is);
+		mega[i].x = x * mega[0].is;
+		mega[i].y = y * mega[0].is;
 		mega[i].type = '1';
 		i++;
 	}
 	if (c == '0')
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * IMS, y * IMS);
+			mega[1].s_image.reference, x * mega[0].is, y * mega[0].is);
 	if (c == 'P')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * IMS, y * IMS);
+			mega[1].s_image.reference, x * mega[0].is, y * mega[0].is);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[2].s_image.reference, x * IMS, y * IMS);
-		mega[0].px = x * IMS;
-		mega[0].py = y * IMS;
+			mega[2].s_image.reference, x * mega[0].is, y * mega[0].is);
+		mega[0].px = x * mega[0].is;
+		mega[0].py = y * mega[0].is;
 	}
 	if (c == 'C')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * IMS, y * IMS);
+			mega[1].s_image.reference, x * mega[0].is, y * mega[0].is);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[4].s_image.reference, x * IMS, y * IMS);
+			mega[4].s_image.reference, x * mega[0].is, y * mega[0].is);
 		mega[0].needcoins += 1;
-		mega[i].x = x * IMS;
-		mega[i].y = y * IMS;
+		mega[i].x = x * mega[0].is;
+		mega[i].y = y * mega[0].is;
 		mega[i].type = 'C';
 		i++;
 	}
 	if (c == 'E')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * IMS, y * IMS);
+			mega[1].s_image.reference, x * mega[0].is, y * mega[0].is);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[5].s_image.reference, x * IMS, y * IMS);
-		mega[i].x = x * IMS;
-		mega[i].y = y * IMS;
+			mega[5].s_image.reference, x * mega[0].is, y * mega[0].is);
+		mega[i].x = x * mega[0].is;
+		mega[i].y = y * mega[0].is;
 		mega[i].type = 'E';
 		i++;
 	}
@@ -315,11 +315,13 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
+	mapcheck(argv[1]);
 	mega = initmap(argv[1]);
 	mega[0].s_vars.mlx = mlx_init();
 	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 5400,
 			3200, "so_long");
-	if (IMS == 128)
+	mega[0].is = 24;
+	if (mega[0].is == 128)
 		initimages(&mega);
 	else
 		initimagessm(&mega);
