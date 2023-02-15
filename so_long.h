@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 10:26:22 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:51:24 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # ifndef IMS
 #  define IMS 128
 # endif
-// small = 24
+// big = 128 small = 24 Do not use this as a macro, make a variable in mapcheck
 typedef struct s_vector
 {
 	int	x;

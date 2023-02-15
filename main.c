@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 10:20:04 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:50:34 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,17 +255,17 @@ void initimages(t_mega **mega)
 void initimagessm(t_mega **mega)
 {
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Bricks_s.xpm");
+			"small/Bricks_14_s.xpm");
 	(*mega)[1].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Tile_14_s.xpm");
+			"small/tile14_s.xpm");
 	(*mega)[2].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Ghost_s.xpm");
+			"small/Ghost_s.xpm");
 	(*mega)[3].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Black_s.xpm");
+			"small/Black_s.xpm");
 	(*mega)[4].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Coll_s.xpm");
+			"small/Coll_s.xpm");
 	(*mega)[5].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"Ladder_s.xpm");
+			"small/ladder_s.xpm");
 	(*mega)[6].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"winning.xpm");
 }
