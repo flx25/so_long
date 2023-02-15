@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 09:06:07 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:20:04 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void move(int x, int y, t_mega *mega)
 int	key(int keycode, t_mega *mega)
 {
 	if (keycode == 13)
-		move(0, -128, mega);
+		move(0, -IMS, mega);
 	if (keycode == 1)
-		move(0, 128, mega);
+		move(0, IMS, mega);
 	if (keycode == 0)
-		move(-128, 0, mega);
+		move(-IMS, 0, mega);
 	if (keycode == 2)
-		move(128, 0, mega);
+		move(IMS, 0, mega);
 	if (keycode == 53)
 	{
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
@@ -156,44 +156,44 @@ void	drawit(char c, int x, int y, t_mega *mega)
 	if (c == '1')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[0].s_image.reference, x * 128, y * 128);
-		mega[i].x = x * 128;
-		mega[i].y = y * 128;
+			mega[0].s_image.reference, x * IMS, y * IMS);
+		mega[i].x = x * IMS;
+		mega[i].y = y * IMS;
 		mega[i].type = '1';
 		i++;
 	}
 	if (c == '0')
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * 128, y * 128);
+			mega[1].s_image.reference, x * IMS, y * IMS);
 	if (c == 'P')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * 128, y * 128);
+			mega[1].s_image.reference, x * IMS, y * IMS);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[2].s_image.reference, x * 128, y * 128);
-		mega[0].px = x * 128;
-		mega[0].py = y * 128;
+			mega[2].s_image.reference, x * IMS, y * IMS);
+		mega[0].px = x * IMS;
+		mega[0].py = y * IMS;
 	}
 	if (c == 'C')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * 128, y * 128);
+			mega[1].s_image.reference, x * IMS, y * IMS);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[4].s_image.reference, x * 128, y * 128);
+			mega[4].s_image.reference, x * IMS, y * IMS);
 		mega[0].needcoins += 1;
-		mega[i].x = x * 128;
-		mega[i].y = y * 128;
+		mega[i].x = x * IMS;
+		mega[i].y = y * IMS;
 		mega[i].type = 'C';
 		i++;
 	}
 	if (c == 'E')
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[1].s_image.reference, x * 128, y * 128);
+			mega[1].s_image.reference, x * IMS, y * IMS);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-			mega[5].s_image.reference, x * 128, y * 128);
-		mega[i].x = x * 128;
-		mega[i].y = y * 128;
+			mega[5].s_image.reference, x * IMS, y * IMS);
+		mega[i].x = x * IMS;
+		mega[i].y = y * IMS;
 		mega[i].type = 'E';
 		i++;
 	}
@@ -252,6 +252,24 @@ void initimages(t_mega **mega)
 			"winning.xpm");
 }
 
+void initimagessm(t_mega **mega)
+{
+	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Bricks_s.xpm");
+	(*mega)[1].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Tile_14_s.xpm");
+	(*mega)[2].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Ghost_s.xpm");
+	(*mega)[3].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Black_s.xpm");
+	(*mega)[4].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Coll_s.xpm");
+	(*mega)[5].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"Ladder_s.xpm");
+	(*mega)[6].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
+			"winning.xpm");
+}
+
 int ft_strlen_nnl(char *str)
 {
 	int	i;
@@ -301,7 +319,10 @@ int	main(int argc, char **argv)
 	mega[0].s_vars.mlx = mlx_init();
 	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 5400,
 			3200, "so_long");
-	initimages(&mega);
+	if (IMS == 128)
+		initimages(&mega);
+	else
+		initimagessm(&mega);
 	mlx_key_hook(mega[0].s_vars.win, key, mega);
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);

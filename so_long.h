@@ -6,25 +6,22 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/14 10:15:19 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/15 10:20:34 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
+
 # include <stdlib.h>
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 # include <fcntl.h>
 
-// typedef struct s_data {
-// 	void	*img;
-// 	char	*addr;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// }				t_data;
-
+# ifndef IMS
+#  define IMS 128
+# endif
+// small = 24
 typedef struct s_vector
 {
 	int	x;
@@ -97,5 +94,4 @@ typedef struct s_color {
 
 //# define WINDOW_WIDTH 1200
 //# define WINDOW_HEIGHT 600
-
 #endif
