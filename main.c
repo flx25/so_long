@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 13:57:47 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:11:14 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 // CHECK FOR LEAKS
 // debugging flags on
 // may other flags off
-// need to find some way to work with big maps
-//maybe make window size depended on map rows and collums
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
