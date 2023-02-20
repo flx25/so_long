@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 11:41:56 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:11:15 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_mega {
 	int			structlen;
 	int			stepsdone;
 	int			is;
+	int			*msize;
 }				t_mega;
 
 #endif

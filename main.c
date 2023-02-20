@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 11:04:38 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:23:14 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -382,6 +382,15 @@ t_mega	*initmap(char *argv1)
 	return (out);
 }
 
+void	initwindow(t_mega **mega, char *argv1)
+{
+	char	*map;
+
+	map = readmap(argv1);
+	(*mega)[0].msize = mapsize(map);
+	free(map);
+}
+
 int	main(int argc, char **argv)
 {
 	t_mega	*mega;
@@ -390,9 +399,10 @@ int	main(int argc, char **argv)
 		return (ft_printf("Please give a map as an argument!\n"));
 	mapcheck(argv[1]);
 	mega = initmap(argv[1]);
+	//initwindow(&mega, argv[1]);
 	mega[0].s_vars.mlx = mlx_init();
-	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 5400,
-			3200, "so_long");
+	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2560,
+			1400, "so_long");
 	mega[0].is = 128;
 	if (mega[0].is == 128)
 		initimages(&mega);
