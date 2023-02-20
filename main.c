@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 11:23:14 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:57:47 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,7 +340,7 @@ void	initimagessm(t_mega **mega) //sm = 24
 	(*mega)[5].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"small/ladder_s.xpm");
 	(*mega)[6].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
-			"winning.xpm");
+			"small/winning_s.xpm");
 }
 
 int	ft_strlen_nnl(char *str)
@@ -388,6 +388,17 @@ void	initwindow(t_mega **mega, char *argv1)
 
 	map = readmap(argv1);
 	(*mega)[0].msize = mapsize(map);
+	if (mega[0]->msize[0] * 128 <= 2560 && mega[0]->msize[1] * 128 <= 1400)
+		(*mega)[0].is = 128;
+	else
+		(*mega)[0].is = 24;
+	(*mega)[0].s_vars.mlx = mlx_init();
+	(*mega)[0].s_vars.win = mlx_new_window(mega[0]->s_vars.mlx, mega[0]->is
+			* mega[0]->msize[0], mega[0]->is * mega[0]->msize[1], "so_long");
+	if (mega[0]->is == 128)
+		initimages(mega);
+	else
+		initimagessm(mega);
 	free(map);
 }
 
@@ -399,15 +410,7 @@ int	main(int argc, char **argv)
 		return (ft_printf("Please give a map as an argument!\n"));
 	mapcheck(argv[1]);
 	mega = initmap(argv[1]);
-	//initwindow(&mega, argv[1]);
-	mega[0].s_vars.mlx = mlx_init();
-	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 2560,
-			1400, "so_long");
-	mega[0].is = 128;
-	if (mega[0].is == 128)
-		initimages(&mega);
-	else
-		initimagessm(&mega);
+	initwindow(&mega, argv[1]);
 	mlx_key_hook(mega[0].s_vars.win, key, mega);
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
