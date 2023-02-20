@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 09:47:00 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:33:00 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,21 @@ int	*mapsize (char *map)
 char	**allocmapsize(char *map)
 {
 	char	**mapgr;
+	char	*data;
+	int		x;
+	int		y;
+	int		i;
 
-	mapgr = malloc((mapsize(map)[0] * mapsize(map)[1]) * sizeof(int));
+	x = mapsize(map)[0];
+	y = mapsize(map)[1];
+	data = ft_calloc(x * y, sizeof(char));
+	mapgr = ft_calloc(x, sizeof(char *));
+	i = 0;
+	while (i < x)
+	{
+		mapgr[i] = data + i * y;
+		i++;
+	}
 	return (mapgr);
 }
 void mapdrawch(char *map, char **mapgr)
@@ -177,9 +190,9 @@ void mapdrawch(char *map, char **mapgr)
 	int	x;
 	int	y;
 
-	x = 1;
+	x = 0;
 	i = 0;
-	y = 1;
+	y = 0;
 	while (map[i] != '\0')
 	{
 		if (map[i] == '\n')
@@ -197,9 +210,13 @@ void mapdrawch(char *map, char **mapgr)
 void	mapcheck(char *argv1)
 {
 	char	*map;
+	char	**mapgr;
 
 	map = readmap(argv1);
-	mapsize(map);
+	mapgr = allocmapsize(map);
+	mapdrawch(map, mapgr);
+	//free(mapgr[0]); // Free the memory block pointed to by the first pointer in mapgr
+	//free(mapgr);
 }
 
 void	drawit(char c, int x, int y, t_mega *mega)
@@ -286,7 +303,7 @@ void	usemap(char *arg1, t_mega *mega)
 
 }
 
-void initimages(t_mega **mega)
+void	initimages(t_mega **mega)
 {
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"Bricks_14-128x128.xpm");
@@ -304,7 +321,7 @@ void initimages(t_mega **mega)
 			"winning.xpm");
 }
 
-void initimagessm(t_mega **mega) //sm = 24
+void	initimagessm(t_mega **mega) //sm = 24
 {
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"small/Bricks_14_s.xpm");
@@ -322,7 +339,7 @@ void initimagessm(t_mega **mega) //sm = 24
 			"winning.xpm");
 }
 
-int ft_strlen_nnl(char *str)
+int	ft_strlen_nnl(char *str)
 {
 	int	i;
 	int	count;
