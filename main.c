@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 10:33:00 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:04:38 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,9 +201,11 @@ void mapdrawch(char *map, char **mapgr)
 			y++;
 		}
 		else
+		{
 			mapgr[x][y] = map[i];
+			x++;
+		}
 		i++;
-		x++;
 	}
 }
 
@@ -277,9 +279,9 @@ void mapdraw(char *map, t_mega *mega)
 	int	x;
 	int	y;
 
-	x = 1;
+	x = 0;
 	i = 0;
-	y = 1;
+	y = 0;
 	while (map[i] != '\0')
 	{
 		if (map[i] == '\n')
@@ -288,9 +290,11 @@ void mapdraw(char *map, t_mega *mega)
 			y++;
 		}
 		else
+		{
 			drawit(map[i], x, y, mega);
-		i++;
-		x++;
+			x++;
+		}
+	i++;
 	}
 }
 
