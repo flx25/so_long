@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/15 11:55:30 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/20 09:47:00 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void move(int x, int y, t_mega *mega)
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[1].s_image.reference, mega[0].px, mega[0].py);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-		mega[2].s_image.reference, mega[0].px + x, mega[0].py + y);
+			mega[2].s_image.reference, mega[0].px + x, mega[0].py + y);
 		mega[0].px = mega[0].px + x;
 		mega[0].py = mega[0].py + y;
 		mega[0].stepsdone += 1;
@@ -65,7 +65,7 @@ void move(int x, int y, t_mega *mega)
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[1].s_image.reference, mega[0].px, mega[0].py);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-		mega[2].s_image.reference, mega[0].px + x, mega[0].py + y);
+			mega[2].s_image.reference, mega[0].px + x, mega[0].py + y);
 		mega[0].px = mega[0].px + x;
 		mega[0].py = mega[0].py + y;
 		mega[0].stepsdone += 1;
@@ -139,15 +139,68 @@ char	*readmap(char *map)
 			break ;
 		out = ft_gnl_strjoin(out, temp);
 	}
-
 	free(temp);
 	return (out);
 }
 
-// void	mapcheck(char *map)
-// {
+int	*mapsize (char *map)
+{
+	int	*xy;
+	int	i;
 
-// }
+	xy = ft_calloc(3, sizeof(int));
+	i = 0;
+	while (map[i] != '\0')
+	{
+		if (map[i] != '\n')
+			xy[0]++;
+		else
+		{
+			xy[1]++;
+			xy[0] = 0;
+		}
+		i++;
+	}
+	xy[1]++;
+	return (xy);
+}
+char	**allocmapsize(char *map)
+{
+	char	**mapgr;
+
+	mapgr = malloc((mapsize(map)[0] * mapsize(map)[1]) * sizeof(int));
+	return (mapgr);
+}
+void mapdrawch(char *map, char **mapgr)
+{
+	int	i;
+	int	x;
+	int	y;
+
+	x = 1;
+	i = 0;
+	y = 1;
+	while (map[i] != '\0')
+	{
+		if (map[i] == '\n')
+		{
+			x = 0;
+			y++;
+		}
+		else
+			mapgr[x][y] = map[i];
+		i++;
+		x++;
+	}
+}
+
+void	mapcheck(char *argv1)
+{
+	char	*map;
+
+	map = readmap(argv1);
+	mapsize(map);
+}
 
 void	drawit(char c, int x, int y, t_mega *mega)
 {
@@ -229,7 +282,6 @@ void	usemap(char *arg1, t_mega *mega)
 	char	*map;
 
 	ft_printf("%s \n", map = readmap(arg1));
-	//mapcheck(map);
 	mapdraw(map, mega);
 
 }
@@ -252,7 +304,7 @@ void initimages(t_mega **mega)
 			"winning.xpm");
 }
 
-void initimagessm(t_mega **mega)
+void initimagessm(t_mega **mega) //sm = 24
 {
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"small/Bricks_14_s.xpm");
@@ -320,7 +372,7 @@ int	main(int argc, char **argv)
 	mega[0].s_vars.mlx = mlx_init();
 	mega[0].s_vars.win = mlx_new_window(mega[0].s_vars.mlx, 5400,
 			3200, "so_long");
-	mega[0].is = 24;
+	mega[0].is = 128;
 	if (mega[0].is == 128)
 		initimages(&mega);
 	else
