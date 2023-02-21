@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 14:11:14 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 10:16:06 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,18 +162,18 @@ int	*mapsize (char *map)
 	xy[1]++;
 	return (xy);
 }
-char	**allocmapsize(char *map)
+t_matrix	**allocmapsize(char *map)
 {
-	char	**mapgr;
-	char	*data;
-	int		x;
-	int		y;
-	int		i;
+	t_matrix	**mapgr;
+	t_matrix	*data;
+	int			x;
+	int			y;
+	int			i;
 
 	x = mapsize(map)[0];
 	y = mapsize(map)[1];
-	data = ft_calloc(x * y, sizeof(char));
-	mapgr = ft_calloc(x, sizeof(char *));
+	data = ft_calloc(x * y, sizeof(t_matrix));
+	mapgr = ft_calloc(x, sizeof(t_matrix *));
 	i = 0;
 	while (i < x)
 	{
@@ -182,7 +182,7 @@ char	**allocmapsize(char *map)
 	}
 	return (mapgr);
 }
-void mapdrawch(char *map, char **mapgr)
+void mapdrawch(char *map, t_matrix **mapgr)
 {
 	int	i;
 	int	x;
@@ -200,7 +200,7 @@ void mapdrawch(char *map, char **mapgr)
 		}
 		else
 		{
-			mapgr[x][y] = map[i];
+			mapgr[x][y].c = map[i];
 			x++;
 		}
 		i++;
@@ -209,8 +209,8 @@ void mapdrawch(char *map, char **mapgr)
 
 void	mapcheck(char *argv1)
 {
-	char	*map;
-	char	**mapgr;
+	char		*map;
+	t_matrix	**mapgr;
 
 	map = readmap(argv1);
 	mapgr = allocmapsize(map);

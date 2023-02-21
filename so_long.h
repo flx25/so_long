@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/20 11:11:15 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 10:16:07 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
 # include "mlx/mlx.h"
 # include "libft/libft.h"
 # include <fcntl.h>
-
+# include <stdbool.h>
 
 typedef struct s_vector
 {
 	int	x;
 	int	y;
 }				t_vector;
+
+typedef struct s_matrix {
+	char	c;
+	bool	v;
+}				t_matrix;
 
 typedef struct s_image {
 	void		*reference;
