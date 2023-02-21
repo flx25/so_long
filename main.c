@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/21 10:57:55 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:34:59 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,6 @@ int	ft_close(void)
 	exit(0);
 }
 
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-// 	*(unsigned int *)dst = color;
-// }
-
 char	*readmap(char *map)
 {
 	int		fd;
@@ -221,6 +213,10 @@ void	DFS(t_matrix **mapgr, int x, int y)
 		DFS(mapgr, x, y - 1);
 }
 
+int	*giveentrance(t_matrix **mapgr)
+{
+
+}
 
 void	mapcheck(char *argv1)
 {
