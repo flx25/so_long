@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/21 14:23:23 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:21:33 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,21 +240,88 @@ int	*givep(t_matrix **mapgr, int xsize)
 	return (NULL);
 }
 
-void	mapcheck(char *argv1)
+int	checkpath(t_matrix **mapgr, int xsize)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (mapgr[x][y].c != '\0')
+	{
+		while (x < xsize)
+		{
+			if ((mapgr[x][y].c == 'P' || mapgr[x][y].c == 'E'
+				|| mapgr[x][y].c == 'C') && mapgr[x][y].v == 0)
+			{
+				ft_printf("Error\nNo valid path on the map! \n");
+				return (1);
+			}
+			x++;
+		}
+		y++;
+		x = 0;
+	}
+	return (0);
+}
+
+int checkmin(char *map)
+{
+	int	i;
+	int	p;
+	int	c;
+	int	e;
+
+	e = 0;
+	i = 0;
+	p = 0;
+	c = 0;
+	while (map[i] != '\0')
+	{
+		if (map[i] == 'P')
+			p++;
+		if (map[i] == 'E')
+			e++;
+		if (map[i] == 'P')
+			c++;
+	i++;
+	}
+	if (p != 1 || c < 1 || e != 1)
+		return (ft_printf("Error\nMap needs 1 E, 1 P and at least 1 C!"), 1);
+	else
+		return (0);
+}
+
+int	mapcheck (char *argv1)
+{
+	char		*map;
+	int			error;
+
+	error = 0;
+	map = readmap(argv1);
+	error = checkmin(map);
+	free(map);
+	return (error);
+}
+
+int	pathcheck(char *argv1)
 {
 	char		*map;
 	t_matrix	**mapgr;
 	int			*player;
+	int			error;
 
+	error = 0;
 	map = readmap(argv1);
 	mapgr = allocmapsize(map);
 	mapdrawch(map, mapgr);
-	//DFS with starting point
 	player = givep(mapgr, mapsize(map)[0]);
 	DFS(mapgr, player[0], player[1]);
+	error = checkpath(mapgr, mapsize(map)[0]);
 	free(player);
-	//free(mapgr[0]); // Free the memory block pointed to by the first pointer in mapgr
-	//free(mapgr);
+	free(mapgr[0]);
+	free(mapgr);
+	return (error);
 }
 
 void	drawit(char c, int x, int y, t_mega *mega)
@@ -407,12 +474,6 @@ t_mega	*initmap(char *argv1)
 	i = 0;
 
 	out = (t_mega *) ft_calloc(msize + 1, sizeof(t_mega));
-
-	// while (i <= msize)
-	// {
-	// 	out[i] = (t_mega *) ft_calloc(1, sizeof(t_mega));
-	// 	i++;
-	// }
 	out[0].structlen = msize;
 	free(map);
 	return (out);
@@ -444,7 +505,9 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Please give a map as an argument!\n"));
+	//need to add filter if map is not .ber format do this with stringcompare from behind
 	mapcheck(argv[1]);
+	pathcheck(argv[1]);
 	mega = initmap(argv[1]);
 	initwindow(&mega, argv[1]);
 	mlx_key_hook(mega[0].s_vars.win, key, mega);
