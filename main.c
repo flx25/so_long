@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/21 10:16:06 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 10:57:55 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // CHECK FOR LEAKS
 // debugging flags on
 // may other flags off
+// do not forget to print the map errors
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
@@ -207,6 +208,20 @@ void mapdrawch(char *map, t_matrix **mapgr)
 	}
 }
 
+void	DFS(t_matrix **mapgr, int x, int y)
+{
+	mapgr[x][y].v = true;
+	if (mapgr[x + 1][y].c != '1' && mapgr[x + 1][y].v != 1)
+		DFS(mapgr, x + 1, y);
+	if (mapgr[x][y + 1].c != '1' && mapgr[x][y + 1].v != 1)
+		DFS(mapgr, x, y + 1);
+	if (mapgr[x - 1][y].c != '1' && mapgr[x - 1][y].v != 1)
+		DFS(mapgr, x - 1, y);
+	if (mapgr[x][y - 1].c != '1' && mapgr[x][y - 1].v != 1)
+		DFS(mapgr, x, y - 1);
+}
+
+
 void	mapcheck(char *argv1)
 {
 	char		*map;
@@ -215,6 +230,8 @@ void	mapcheck(char *argv1)
 	map = readmap(argv1);
 	mapgr = allocmapsize(map);
 	mapdrawch(map, mapgr);
+	//DFS with starting point
+	DFS(mapgr, 1, 4);
 	//free(mapgr[0]); // Free the memory block pointed to by the first pointer in mapgr
 	//free(mapgr);
 }
