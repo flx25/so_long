@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/21 11:34:59 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:23:23 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,21 +213,46 @@ void	DFS(t_matrix **mapgr, int x, int y)
 		DFS(mapgr, x, y - 1);
 }
 
-int	*giveentrance(t_matrix **mapgr)
+int	*givep(t_matrix **mapgr, int xsize)
 {
+	int	x;
+	int	y;
+	int	*out;
 
+	out = ft_calloc(3, sizeof(int));
+	x = 0;
+	y = 0;
+	while (mapgr[x][y].c != '\0')
+	{
+		while (x < xsize)
+		{
+			if (mapgr[x][y].c == 'P')
+			{
+				out[0] = x;
+				out[1] = y;
+				return (out);
+			}
+			x++;
+		}
+		y++;
+		x = 0;
+	}
+	return (NULL);
 }
 
 void	mapcheck(char *argv1)
 {
 	char		*map;
 	t_matrix	**mapgr;
+	int			*player;
 
 	map = readmap(argv1);
 	mapgr = allocmapsize(map);
 	mapdrawch(map, mapgr);
 	//DFS with starting point
-	DFS(mapgr, 1, 4);
+	player = givep(mapgr, mapsize(map)[0]);
+	DFS(mapgr, player[0], player[1]);
+	free(player);
 	//free(mapgr[0]); // Free the memory block pointed to by the first pointer in mapgr
 	//free(mapgr);
 }

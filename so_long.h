@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/21 10:16:07 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:59:55 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ typedef struct s_matrix {
 	char	c;
 	bool	v;
 }				t_matrix;
+
+typedef struct s_vecchar
+{
+	int		x;
+	int		y;
+	char	c;
+}				t_vecchar;
 
 typedef struct s_image {
 	void		*reference;
