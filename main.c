@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/22 09:26:59 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/22 09:29:38 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ int	checkpath(t_matrix **mapgr, int xsize)
 			if ((mapgr[x][y].c == 'P' || mapgr[x][y].c == 'E'
 				|| mapgr[x][y].c == 'C') && mapgr[x][y].v == 0)
 			{
-				ft_printf("Error\nNo valid path on the map! \n");
+				ft_printf("Error\nNo valid path on the map!\n");
 				return (1);
 			}
 			x++;
@@ -287,7 +287,7 @@ int checkmin(char *map)
 	i++;
 	}
 	if (p != 1 || c < 1 || e != 1)
-		return (ft_printf("Error\nMap needs 1 E, 1 P and at least 1 C!"), 1);
+		return (ft_printf("Error\nMap needs 1 E, 1 P and at least 1 C!\n"), 1);
 	else
 		return (0);
 }
@@ -514,7 +514,7 @@ int	checkformat (char *argv1)
 	len = ft_strlen(argv1);
 	out = ft_strncmp(argv1 + len - 4, ".ber", 4);
 	if (out != 0)
-		ft_printf("Error\nMap needs to be in .ber format");
+		ft_printf("Error\nMap needs to be in .ber format!\n");
 	return (out);
 }
 
@@ -582,7 +582,7 @@ int	checkrect(char *argv1)
 	free(mapgr);
 	free(mapsizei);
 	if (error != 0)
-		ft_printf("Error\nThe map needs to be rectangular, surrounded by walls");
+		ft_printf("Error\nThe map needs to be rectangular, surrounded by walls!\n");
 	return (error);
 }
 
