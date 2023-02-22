@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/22 09:29:38 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/22 10:57:15 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	key(int keycode, t_mega *mega)
 	if (keycode == 53)
 	{
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+		free(mega);
 		exit(0);
 			// maybe need more to close
 	}
@@ -470,12 +471,10 @@ t_mega	*initmap(char *argv1)
 {
 	char	*map;
 	int		msize;
-	int		i;
 	t_mega	*out;
 
 	map = readmap(argv1);
 	msize = ft_strlen_nnl(map);
-	i = 0;
 
 	out = (t_mega *) ft_calloc(msize + 1, sizeof(t_mega));
 	out[0].structlen = msize;
@@ -582,7 +581,7 @@ int	checkrect(char *argv1)
 	free(mapgr);
 	free(mapsizei);
 	if (error != 0)
-		ft_printf("Error\nThe map needs to be rectangular, surrounded by walls!\n");
+		ft_printf("Error\nMap needs to be rectangular, surrounded by walls!\n");
 	return (error);
 }
 

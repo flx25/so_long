@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 15:27:41 by fvon-nag          #+#    #+#             */
-/*   Updated: 2022/12/19 10:18:00 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/22 10:07:53 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,8 @@ char	*ft_substr(char const *s, unsigned int start,
 			size_t len)
 {
 	char			*out;
-	unsigned int	i;
-	unsigned int	c;
 	unsigned int	slength;
 
-	c = 0;
-	i = start;
 	slength = (unsigned int) ft_strlen(s);
 	if (slength < start)
 	{
