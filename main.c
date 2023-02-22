@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/21 16:41:36 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/22 08:30:20 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,15 +499,37 @@ void	initwindow(t_mega **mega, char *argv1)
 	free(map);
 }
 
+int	checkformat (char *argv1)
+{
+	int	len;
+	int	out;
+
+	len = ft_strlen(argv1);
+	out = ft_strncmp(argv1 + len - 4, ".ber", 4);
+	if (out != 0)
+		ft_printf("Error\nMap needs to be in .ber format");
+	return (out);
+}
+
+int	checks(char *argv1)
+{
+	if (checkformat(argv1) != 0)
+		return (1);
+	if (mapcheck(argv1) != 0)
+		return (1);
+	if (pathcheck(argv1) != 0)
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_mega	*mega;
 
 	if (argc != 2)
-		return (ft_printf("Please give a map as an argument!\n"));
-	//need to add filter if map is not .ber format do this with stringcompare from behind
-	mapcheck(argv[1]);
-	pathcheck(argv[1]);
+		return (ft_printf("Error\nPlease give a map as an argument!\n"));
+	if (checks != 0)
+		exit(0); // maybe need to free more
 	mega = initmap(argv[1]);
 	initwindow(&mega, argv[1]);
 	mlx_key_hook(mega[0].s_vars.win, key, mega);
