@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/22 08:30:20 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/22 09:26:59 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,24 +155,24 @@ int	*mapsize (char *map)
 	xy[1]++;
 	return (xy);
 }
+
 t_matrix	**allocmapsize(char *map)
 {
 	t_matrix	**mapgr;
 	t_matrix	*data;
-	int			x;
-	int			y;
+	int			*msize;
 	int			i;
 
-	x = mapsize(map)[0];
-	y = mapsize(map)[1];
-	data = ft_calloc(x * y, sizeof(t_matrix));
-	mapgr = ft_calloc(x, sizeof(t_matrix *));
+	msize = mapsize(map);
+	data = ft_calloc(msize[0] * msize[1], sizeof(t_matrix));
+	mapgr = ft_calloc(msize[0], sizeof(t_matrix *));
 	i = 0;
-	while (i < x)
+	while (i < msize[0])
 	{
-		mapgr[i] = data + i * y;
+		mapgr[i] = data + i * msize[1];
 		i++;
 	}
+	free(msize);
 	return (mapgr);
 }
 void mapdrawch(char *map, t_matrix **mapgr)
@@ -310,17 +310,21 @@ int	pathcheck(char *argv1)
 	t_matrix	**mapgr;
 	int			*player;
 	int			error;
+	int			*mapsizei;
 
 	error = 0;
 	map = readmap(argv1);
 	mapgr = allocmapsize(map);
 	mapdrawch(map, mapgr);
-	player = givep(mapgr, mapsize(map)[0]);
+	mapsizei = mapsize(map);
+	player = givep(mapgr, mapsizei[0]);
 	DFS(mapgr, player[0], player[1]);
-	error = checkpath(mapgr, mapsize(map)[0]);
+	error = checkpath(mapgr, mapsizei[0]);
 	free(player);
+	free(mapsizei);
 	free(mapgr[0]);
 	free(mapgr);
+	free(map);
 	return (error);
 }
 
@@ -482,9 +486,11 @@ t_mega	*initmap(char *argv1)
 void	initwindow(t_mega **mega, char *argv1)
 {
 	char	*map;
+	int		*msize;
 
 	map = readmap(argv1);
-	(*mega)[0].msize = mapsize(map);
+	msize = mapsize(map);
+	(*mega)[0].msize = msize; //remember to free
 	if (mega[0]->msize[0] * 128 <= 2560 && mega[0]->msize[1] * 128 <= 1400)
 		(*mega)[0].is = 128;
 	else
@@ -496,6 +502,7 @@ void	initwindow(t_mega **mega, char *argv1)
 		initimages(mega);
 	else
 		initimagessm(mega);
+	free(msize);
 	free(map);
 }
 
@@ -511,11 +518,82 @@ int	checkformat (char *argv1)
 	return (out);
 }
 
+int rectch2(t_matrix **mapgr, int xmax, int ymax)
+{
+	int	i;
+
+	i = 0;
+	while (i < xmax)
+	{
+		if (mapgr[i][ymax - 1].c != '1')
+			return (1);
+	i++;
+	}
+	i = 0;
+	while (i < ymax)
+	{
+		if (mapgr[xmax - 1][i].c != '1')
+			return (1);
+		i++;
+	}
+	i = 0;
+	return (0);
+}
+
+int rectch1(t_matrix **mapgr, int xmax, int ymax)
+{
+	int	i;
+
+	i = 0;
+	while (i < xmax)
+	{
+		if (mapgr[i][0].c != '1')
+			return (1);
+	i++;
+	}
+	i = 0;
+	while (i < ymax)
+	{
+		if (mapgr[0][i].c != '1')
+			return (1);
+		i++;
+	}
+	i = 0;
+	if (rectch2(mapgr, xmax, ymax) == 1)
+		return (1);
+	return (0);
+}
+
+int	checkrect(char *argv1)
+{
+	char		*map;
+	t_matrix	**mapgr;
+	int			error;
+	int			*mapsizei;
+
+	error = 0;
+	map = readmap(argv1);
+	mapgr = allocmapsize(map);
+	mapdrawch(map, mapgr);
+	mapsizei = mapsize(map);
+	error = rectch1(mapgr, mapsizei[0], mapsizei[1]);
+	free(map);
+	free(mapgr[0]);
+	free(mapgr);
+	free(mapsizei);
+	if (error != 0)
+		ft_printf("Error\nThe map needs to be rectangular, surrounded by walls");
+	return (error);
+}
+
+
 int	checks(char *argv1)
 {
 	if (checkformat(argv1) != 0)
 		return (1);
 	if (mapcheck(argv1) != 0)
+		return (1);
+	if (checkrect(argv1) != 0)
 		return (1);
 	if (pathcheck(argv1) != 0)
 		return (1);
@@ -528,7 +606,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_printf("Error\nPlease give a map as an argument!\n"));
-	if (checks != 0)
+	if (checks(argv[1]) != 0)
 		exit(0); // maybe need to free more
 	mega = initmap(argv[1]);
 	initwindow(&mega, argv[1]);
