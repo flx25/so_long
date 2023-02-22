@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/22 10:57:15 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:17:42 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ int	key(int keycode, t_mega *mega)
 	if (keycode == 53)
 	{
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	//	mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
 		free(mega);
 		exit(0);
 			// maybe need more to close
 	}
-
 	return (0);
 }
 
@@ -132,6 +132,7 @@ char	*readmap(char *map)
 		out = ft_gnl_strjoin(out, temp);
 	}
 	free(temp);
+	close(fd);
 	return (out);
 }
 
@@ -613,4 +614,10 @@ int	main(int argc, char **argv)
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
 	mlx_loop(mega[0].s_vars.mlx);
+	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	//mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	//destroy images
+	// get library with destroy images
+	//use leaks
+	// leaks --atExit -- ./so_long ...
 }
