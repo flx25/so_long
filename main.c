@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 08:37:49 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 10:36:13 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,17 @@ void move(int x, int y, t_mega *mega)
 	ft_printf("steps done: %i\n", mega[0].stepsdone);
 }
 
-void	destroyimages(t_mega *mega)
+void	destroyimages(t_mega **mega)
 {
-
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[0]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[1]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[2]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[3]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[4]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[5]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[6]->s_image.reference);
 }
+
 int	key(int keycode, t_mega *mega)
 {
 	if (keycode == 13)
@@ -106,18 +113,19 @@ int	key(int keycode, t_mega *mega)
 		move(mega[0].is, 0, mega);
 	if (keycode == 53)
 	{
-		destroyimages(mega);
+		destroyimages(&mega);
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
-		mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
 		free(mega);
 		exit(0);
-			// maybe need more to close
 	}
 	return (0);
 }
 
-int	ft_close(void)
+int	ft_close(t_mega *mega)
 {
+	destroyimages(&mega);
+	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	free(mega);
 	exit(0);
 }
 
@@ -248,14 +256,14 @@ int	*givep(t_matrix **mapgr, int xsize)
 	return (NULL);
 }
 
-int	checkpath(t_matrix **mapgr, int xsize)
+int	checkpath(t_matrix **mapgr, int xsize, int ysize)
 {
 	int	x;
 	int	y;
 
 	x = 0;
 	y = 0;
-	while (mapgr[x][y].c != '\0')
+	while (y < ysize)
 	{
 		while (x < xsize)
 		{
@@ -307,8 +315,8 @@ int	checkchars(char *map)
 	i = 0;
 	while (map[i] != '\0')
 	{
-		if (map[i] != '\n' || map[i] != '1' || map[i] != '0'
-			|| map[i] != 'P' || map[i] != 'E' || map[i] != 'C')
+		if (map[i] != '\n' && map[i] != '1' && map[i] != '0'
+			&& map[i] != 'P' && map[i] != 'E' && map[i] != 'C')
 		{
 			ft_printf("Error\nForbidden characters!");
 			return (1);
@@ -346,7 +354,7 @@ int	pathcheck(char *argv1)
 	mapsizei = mapsize(map);
 	player = givep(mapgr, mapsizei[0]);
 	DFS(mapgr, player[0], player[1]);
-	error = checkpath(mapgr, mapsizei[0]);
+	error = checkpath(mapgr, mapsizei[0], mapsizei[1]);
 	free(player);
 	free(mapsizei);
 	free(mapgr[0]);
@@ -639,8 +647,9 @@ int	main(int argc, char **argv)
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
 	mlx_loop(mega[0].s_vars.mlx);
+	destroyimages(&mega);
 	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
-	mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	//mlx_destroy_display(mega[0].s_vars.mlx);
 	//destroy images
 	// get library with destroy images
 	//use leaks
