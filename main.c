@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/22 16:17:42 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 08:27:22 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ int	key(int keycode, t_mega *mega)
 		move(mega[0].is, 0, mega);
 	if (keycode == 53)
 	{
+		destroyimages(mega);
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
-	//	mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
+		mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
 		free(mega);
 		exit(0);
 			// maybe need more to close
@@ -294,6 +295,24 @@ int checkmin(char *map)
 		return (0);
 }
 
+int	checkchars(char *map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i] != '\0')
+	{
+		if (map[i] != '\n' || map[i] != '1' || map[i] != '0'
+			|| map[i] != 'P' || map[i] != 'E' || map[i] != 'C')
+		{
+			ft_printf("Error\nForbidden characters!");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	mapcheck (char *argv1)
 {
 	char		*map;
@@ -301,7 +320,8 @@ int	mapcheck (char *argv1)
 
 	error = 0;
 	map = readmap(argv1);
-	error = checkmin(map);
+	error += checkchars(map);
+	error += checkmin(map);
 	free(map);
 	return (error);
 }
@@ -615,7 +635,7 @@ int	main(int argc, char **argv)
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
 	mlx_loop(mega[0].s_vars.mlx);
 	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
-	//mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	mlx_destroy_display(mega[0].s_vars.mlx, mega[0].s_vars.win);
 	//destroy images
 	// get library with destroy images
 	//use leaks
