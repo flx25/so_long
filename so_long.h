@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 09:56:05 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:11:31 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,16 @@ typedef struct s_mega {
 	int			is;
 	int			*msize;
 }				t_mega;
+
+t_mega		*initmap(char *argv1);
+char		*readmap(char *map);
+int			checks(char *argv1);
+int			checkformat(char *argv1);
+int			mapcheck(char *argv1);
+int			checkrect(char *argv1);
+int			pathcheck(char *argv1);
+t_matrix	**allocmapsize(char *map);
+int			*mapsize(char *map);
+void		mapdrawch(char *map, t_matrix **mapgr);
 
 #endif

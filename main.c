@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 15:04:35 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:58:33 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // CHECK FOR LEAKS -> ask about the issue with the destroy images
 // debugging flags on
 // may other flags off
+// try different kind of frees in the gnl strjoin function -> leaks
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
@@ -130,27 +131,6 @@ int	key(int keycode, t_mega *mega)
 	return (0);
 }
 
-
-char	*readmap(char *map)
-{
-	int		fd;
-	char	*temp;
-	char	*out;
-
-	temp = ft_calloc(1, sizeof(char));
-	out = ft_calloc(1, sizeof(char));
-	fd = open(map, O_RDONLY);
-	while (temp)
-	{
-		temp = get_next_line(fd);
-		if (temp == NULL)
-			break ;
-		out = ft_gnl_strjoin(out, temp);
-		free(temp);
-	}
-	close(fd);
-	return (out);
-}
 
 int	*mapsize(char *map)
 {
@@ -503,20 +483,6 @@ int	ft_strlen_nnl(char *str)
 	return (count);
 }
 
-t_mega	*initmap(char *argv1)
-{
-	char	*map;
-	int		msize;
-	t_mega	*out;
-
-	map = readmap(argv1);
-	msize = ft_strlen_nnl(map);
-
-	out = (t_mega *) ft_calloc(msize + 1, sizeof(t_mega));
-	out[0].structlen = msize;
-	free(map);
-	return (out);
-}
 
 void	initwindow(t_mega **mega, char *argv1)
 {
