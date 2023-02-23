@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 10:36:13 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:16:25 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,26 @@ int	tilecheck(int x, int y, t_mega *mega)
 	}
 	return (-1);
 }
+
+void	destroyimages(t_mega **mega)
+{
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[0]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[1]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[2]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[3]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[4]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[5]->s_image.reference);
+	mlx_destroy_image(mega[0]->s_vars.mlx, mega[6]->s_image.reference);
+}
+
+int	ft_close(t_mega *mega)
+{
+	destroyimages(&mega);
+	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	free(mega);
+	exit(0);
+}
+
 void move(int x, int y, t_mega *mega)
 {
 	int	tcret;
@@ -83,22 +103,11 @@ void move(int x, int y, t_mega *mega)
 		mega[0].px = mega[0].px + x;
 		mega[0].py = mega[0].py + y;
 		mega[0].stepsdone += 1;
-		//some kind of winning function
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[6].s_image.reference, mega[0].px, mega[0].py);
+		ft_close(mega);
 	}
 	ft_printf("steps done: %i\n", mega[0].stepsdone);
-}
-
-void	destroyimages(t_mega **mega)
-{
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[0]->s_image.reference);
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[1]->s_image.reference);
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[2]->s_image.reference);
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[3]->s_image.reference);
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[4]->s_image.reference);
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[5]->s_image.reference);
-	mlx_destroy_image(mega[0]->s_vars.mlx, mega[6]->s_image.reference);
 }
 
 int	key(int keycode, t_mega *mega)
@@ -121,13 +130,6 @@ int	key(int keycode, t_mega *mega)
 	return (0);
 }
 
-int	ft_close(t_mega *mega)
-{
-	destroyimages(&mega);
-	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
-	free(mega);
-	exit(0);
-}
 
 char	*readmap(char *map)
 {
