@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 11:16:25 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 14:21:21 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	ft_close(t_mega *mega)
 	destroyimages(&mega);
 	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
 	free(mega);
-	exit(0);
+	//exit(0);
+	return (0);
 }
 
 void move(int x, int y, t_mega *mega)
@@ -125,7 +126,7 @@ int	key(int keycode, t_mega *mega)
 		destroyimages(&mega);
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
 		free(mega);
-		exit(0);
+		//exit(0);
 	}
 	return (0);
 }
@@ -146,8 +147,8 @@ char	*readmap(char *map)
 		if (temp == NULL)
 			break ;
 		out = ft_gnl_strjoin(out, temp);
+		free(temp);
 	}
-	free(temp);
 	close(fd);
 	return (out);
 }
@@ -448,7 +449,7 @@ void	usemap(char *arg1, t_mega *mega)
 
 	ft_printf("%s \n", map = readmap(arg1));
 	mapdraw(map, mega);
-
+	free(map);
 }
 
 void	initimages(t_mega **mega)
