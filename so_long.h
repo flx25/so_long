@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 18:11:31 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:42:17 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,16 @@ int			pathcheck(char *argv1);
 t_matrix	**allocmapsize(char *map);
 int			*mapsize(char *map);
 void		mapdrawch(char *map, t_matrix **mapgr);
+int			checkchars(char *map);
+int			checkmin(char *map);
+int			checkpath(t_matrix **mapgr, int xsize, int ysize);
+int			*givep(t_matrix **mapgr, int xsize);
+void		dfs(t_matrix **mapgr, int x, int y);
+void		usemap(char *arg1, t_mega *mega);
+void		mapdraw(char *map, t_mega *mega);
+void		drawit2(char c, t_vector xy, t_mega *mega, int *i);
+void		drawit1(char c, t_vector xy, t_mega *mega, int *i);
+void		drawitpre(char c, int x, int y, t_mega *mega);
+
 
 #endif

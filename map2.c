@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:07:07 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 18:09:42 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 18:40:55 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	pathcheck(char *argv1)
 	mapdrawch(map, mapgr);
 	mapsizei = mapsize(map);
 	player = givep(mapgr, mapsizei[0]);
-	DFS(mapgr, player[0], player[1]);
+	dfs(mapgr, player[0], player[1]);
 	error = checkpath(mapgr, mapsizei[0], mapsizei[1]);
 	free(player);
 	free(mapsizei);
