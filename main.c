@@ -6,16 +6,15 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 14:21:21 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:04:35 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// CHECK FOR LEAKS
+// CHECK FOR LEAKS -> ask about the issue with the destroy images
 // debugging flags on
 // may other flags off
-// do not forget to print the map errors
 
 t_image	ft_new_sprite(void *mlx, char *path)
 {
@@ -153,7 +152,7 @@ char	*readmap(char *map)
 	return (out);
 }
 
-int	*mapsize (char *map)
+int	*mapsize(char *map)
 {
 	int	*xy;
 	int	i;
@@ -470,7 +469,7 @@ void	initimages(t_mega **mega)
 			"winning.xpm");
 }
 
-void	initimagessm(t_mega **mega) //sm = 24
+void	initimagessm(t_mega **mega)
 {
 	(*mega)[0].s_image = ft_new_sprite(mega[0]->s_vars.mlx,
 			"small/Bricks_14_s.xpm");
@@ -652,6 +651,7 @@ int	main(int argc, char **argv)
 	mlx_loop(mega[0].s_vars.mlx);
 	destroyimages(&mega);
 	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
+	free(mega);
 	//mlx_destroy_display(mega[0].s_vars.mlx);
 	//destroy images
 	// get library with destroy images
