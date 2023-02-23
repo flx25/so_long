@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 08:27:22 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/23 08:37:49 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ void move(int x, int y, t_mega *mega)
 			mega[6].s_image.reference, mega[0].px, mega[0].py);
 	}
 	ft_printf("steps done: %i\n", mega[0].stepsdone);
+}
+
+void	destroyimages(t_mega *mega)
+{
+
 }
 int	key(int keycode, t_mega *mega)
 {
