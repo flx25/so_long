@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 08:32:15 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/24 09:34:55 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 09:54:45 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	destroyimages(t_mega *mega)
 {
-	ft_printf("image 0 %i", mlx_destroy_image(mega[0].s_vars.mlx, mega[0].s_image.reference));
-	ft_printf("image 1 %i", mlx_destroy_image(mega[0].s_vars.mlx, mega[1].s_image.reference));
+	mlx_destroy_image(mega[0].s_vars.mlx, mega[0].s_image.reference);
+	mlx_destroy_image(mega[0].s_vars.mlx, mega[1].s_image.reference);
 	mlx_destroy_image(mega[0].s_vars.mlx, mega[2].s_image.reference);
 	mlx_destroy_image(mega[0].s_vars.mlx, mega[3].s_image.reference);
 	mlx_destroy_image(mega[0].s_vars.mlx, mega[4].s_image.reference);

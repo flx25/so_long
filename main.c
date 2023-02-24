@@ -6,17 +6,11 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/24 09:42:24 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 09:59:51 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// CHECK FOR LEAKS -> ask about the issue with the destroy images
-// debugging flags on
-// may other flags off
-// try different kind of frees in the gnl strjoin function -> leaks
-
 
 int	ft_close(t_mega *mega)
 {
@@ -47,7 +41,6 @@ int	key(int keycode, t_mega *mega)
 	return (0);
 }
 
-
 void	initwindow(t_mega **mega, char *argv1)
 {
 	char	*map;
@@ -71,8 +64,6 @@ void	initwindow(t_mega **mega, char *argv1)
 	free(map);
 }
 
-
-
 int	main(int argc, char **argv)
 {
 	t_mega	*mega;
@@ -80,13 +71,11 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_printf("Error\nPlease give a map as an argument!\n"));
 	if (checks(argv[1]) != 0)
-		exit(0); // maybe need to free more
+		exit(0);
 	mega = initmap(argv[1]);
 	initwindow(&mega, argv[1]);
 	mlx_key_hook(mega[0].s_vars.win, key, mega);
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
 	mlx_loop(mega[0].s_vars.mlx);
-	//use leaks
-	// leaks --atExit -- ./so_long ...
 }
