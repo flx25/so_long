@@ -6,12 +6,12 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:18:16 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/24 08:25:36 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:18:30 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-//tampered with these, check on mac pointer + vector
+
 void	drawitpre(char c, int x, int y, t_mega *mega)
 {
 	static int	i;
