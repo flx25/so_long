@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 18:42:17 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 09:22:06 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,19 @@ void		mapdraw(char *map, t_mega *mega);
 void		drawit2(char c, t_vector xy, t_mega *mega, int *i);
 void		drawit1(char c, t_vector xy, t_mega *mega, int *i);
 void		drawitpre(char c, int x, int y, t_mega *mega);
-
-
+int			ft_strlen_nnl(char *str);
+int			rectch1(t_matrix **mapgr, int xmax, int ymax);
+int			rectch2(t_matrix **mapgr, int xmax, int ymax);
+t_image		ft_new_sprite(void *mlx, char *path);
+void		initimagessm(t_mega **mega);
+void		initimages(t_mega **mega);
+void		destroyimages(t_mega **mega);
+void		move3(int x, int y, t_mega *mega);
+void		move2(int x, int y, t_mega *mega, int tcret);
+void		move1(int x, int y, t_mega *mega);
+void		premove(int x, int y, t_mega *mega);
+int			tilecheck(int x, int y, t_mega *mega);
+void		initwindow(t_mega **mega, char *argv1);
+int			key(int keycode, t_mega *mega);
+int			ft_close(t_mega *mega);
 #endif

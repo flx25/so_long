@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:18:16 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/23 18:41:00 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 08:25:36 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	drawitpre(char c, int x, int y, t_mega *mega)
 	xy.x = x;
 	xy.y = y;
 	if (c == 'C' || c == 'E')
-		drawit2(map[i], x, y, mega, &i);
+		drawit2(c, xy, mega, &i);
 	else
-		drawit1(map[i], x, y, mega, &i);
-
+		drawit1(c, xy, mega, &i);
 }
 
 void	drawit1(char c, t_vector xy, t_mega *mega, int *i)
@@ -32,9 +31,9 @@ void	drawit1(char c, t_vector xy, t_mega *mega, int *i)
 	{
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[0].s_image.reference, xy.x * mega[0].is, xy.y * mega[0].is);
-		mega[i].x = xy.x * mega[0].is;
-		mega[i].y = xy.y * mega[0].is;
-		mega[i].type = '1';
+		mega[*i].x = xy.x * mega[0].is;
+		mega[*i].y = xy.y * mega[0].is;
+		mega[*i].type = '1';
 		(*i)++;
 	}
 	if (c == '0')
@@ -60,9 +59,9 @@ void	drawit2(char c, t_vector xy, t_mega *mega, int *i)
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[4].s_image.reference, xy.x * mega[0].is, xy.y * mega[0].is);
 		mega[0].needcoins += 1;
-		mega[i].x = xy.x * mega[0].is;
-		mega[i].y = xy.y * mega[0].is;
-		mega[i].type = 'C';
+		mega[*i].x = xy.x * mega[0].is;
+		mega[*i].y = xy.y * mega[0].is;
+		mega[*i].type = 'C';
 		(*i)++;
 	}
 	if (c == 'E')
@@ -71,9 +70,9 @@ void	drawit2(char c, t_vector xy, t_mega *mega, int *i)
 			mega[1].s_image.reference, xy.x * mega[0].is, xy.y * mega[0].is);
 		mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
 			mega[5].s_image.reference, xy.x * mega[0].is, xy.y * mega[0].is);
-		mega[i].x = xy.x * mega[0].is;
-		mega[i].y = xy.y * mega[0].is;
-		mega[i].type = 'E';
+		mega[*i].x = xy.x * mega[0].is;
+		mega[*i].y = xy.y * mega[0].is;
+		mega[*i].type = 'E';
 		(*i)++;
 	}
 }

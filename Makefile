@@ -6,11 +6,18 @@
 #    By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 09:42:12 by fvon-nag          #+#    #+#              #
-#    Updated: 2023/02/23 14:47:14 by fvon-nag         ###   ########.fr        #
+#    Updated: 2023/02/24 09:20:31 by fvon-nag         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SOURCES = main.c
+SOURCES = main.c \
+			map.c \
+			map2.c \
+			map3.c \
+			map4.c \
+			map5.c \
+			images.c \
+			move.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
