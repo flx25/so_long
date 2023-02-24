@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:32 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/24 09:18:51 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 09:42:24 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 
 int	ft_close(t_mega *mega)
 {
-	destroyimages(&mega);
+	destroyimages(mega);
 	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
 	free(mega);
-	free(mega[0].s_vars.mlx); //maybe this
+	exit(0);
 	return (0);
 }
 
@@ -39,9 +39,10 @@ int	key(int keycode, t_mega *mega)
 		premove(mega[0].is, 0, mega);
 	if (keycode == 53)
 	{
-		destroyimages(&mega);
+		destroyimages(mega);
 		mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
 		free(mega);
+		exit(0);
 	}
 	return (0);
 }
@@ -54,7 +55,7 @@ void	initwindow(t_mega **mega, char *argv1)
 
 	map = readmap(argv1);
 	msize = mapsize(map);
-	(*mega)[0].msize = msize; //remember to free
+	(*mega)[0].msize = msize;
 	if (mega[0]->msize[0] * 128 <= 2560 && mega[0]->msize[1] * 128 <= 1400)
 		(*mega)[0].is = 128;
 	else
@@ -86,12 +87,6 @@ int	main(int argc, char **argv)
 	usemap(argv[1], mega);
 	mlx_hook(mega[0].s_vars.win, 17, 0, ft_close, mega);
 	mlx_loop(mega[0].s_vars.mlx);
-	destroyimages(&mega);
-	mlx_destroy_window(mega[0].s_vars.mlx, mega[0].s_vars.win);
-	free(mega);
-	//mlx_destroy_display(mega[0].s_vars.mlx);
-	//destroy images
-	// get library with destroy images
 	//use leaks
 	// leaks --atExit -- ./so_long ...
 }

@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:56:49 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/24 09:22:06 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 09:35:37 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int			rectch2(t_matrix **mapgr, int xmax, int ymax);
 t_image		ft_new_sprite(void *mlx, char *path);
 void		initimagessm(t_mega **mega);
 void		initimages(t_mega **mega);
-void		destroyimages(t_mega **mega);
+void		destroyimages(t_mega *mega);
 void		move3(int x, int y, t_mega *mega);
 void		move2(int x, int y, t_mega *mega, int tcret);
 void		move1(int x, int y, t_mega *mega);

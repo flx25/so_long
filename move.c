@@ -6,7 +6,7 @@
 /*   By: fvon-nag <fvon-nag@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 08:36:09 by fvon-nag          #+#    #+#             */
-/*   Updated: 2023/02/24 09:16:27 by fvon-nag         ###   ########.fr       */
+/*   Updated: 2023/02/24 09:30:15 by fvon-nag         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,5 @@ void	move3(int x, int y, t_mega *mega)
 	mega[0].px = mega[0].px + x;
 	mega[0].py = mega[0].py + y;
 	mega[0].stepsdone += 1;
-	mlx_put_image_to_window(mega[0].s_vars.mlx, mega[0].s_vars.win,
-		mega[6].s_image.reference, mega[0].px, mega[0].py);
 	ft_close(mega);
 }
